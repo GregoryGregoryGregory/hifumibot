@@ -54,6 +54,7 @@ exports.helpHandle = function (msg, suffix) {
 	msgArray.push('**Tags:** `' + config.settings.prefix + 'tag create` `' + config.settings.prefix + 'tag edit` `' + config.settings.prefix + 'tag delete` `' + config.settings.prefix + 'tag owner`')
 	msgArray.push('**NSFW:** `' + config.settings.prefix + 'e621` `' + config.settings.prefix + 'rule34`')
 	msgArray.push('**Bot:** `' + config.settings.prefix + 'ping` `' + config.settings.prefix + 'about`')
+	msgArray.push('**Owner-only:** `' + config.settings.prefix + 'senpaihelp`')
 	msgArray.push('Detailed help about my commands can be found here: http://hifumibot.tumblr.com/commands')
     msgArray.push('This bot is forked from Hifumi, a multifunctional Discord bot, take a look to our GitHub: https://github.com/Underforest/HifumiBot')
     msg.author.openDM().then((y) => {

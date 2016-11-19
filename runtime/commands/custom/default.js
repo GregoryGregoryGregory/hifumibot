@@ -6,6 +6,22 @@ var argv = require('minimist')(process.argv.slice(2))
 
 //English -START-
 
+Commands.senpaihelp = {
+  name: 'senpaihelp',
+  module: 'default',
+  level: 'master',
+fn: function (msg, suffix) { 
+  msg.channel.sendMessage(`Owner-only commands
+  
+  ${config.settings.prefix}eval - evaluate arbitrary Javascript Javascript/Discordie code with results
+  ${config.settings.prefix}plaineval - same as eval command, but it's a plained evaluation
+  ${config.settings.prefix}setstatus online game - set status  of the bot as online playing a game
+  ${config.settings.prefix}setstatus idle game - set status of the bot as idle playing a game
+  ${config.settings.prefix}setstatus twitchurl game - set status of the bot as streaming playing a game
+  ${config.settings.prefix}sleep - shutdown the bot`)
+}
+}
+
 Commands.ping = {
   name: 'ping',
   module: 'default',
@@ -214,13 +230,14 @@ Commands.about = {
   msg.channel.sendMessage ('Hello, ' + msg.author.username + '. ' + `I am ${bot.User.username}, nice to meet you.
 
 **Stats**
-${config.settings.prefix} is my prefix
+${config.settings.prefix} is my prefix (server prefix is ${prefix})
 ${bot.Guilds.length} servers
 ${bot.Channels.length} channels
 ${bot.Users.length} users
 ${bot.VoiceConnections.length} voice channels
 ${bot.DirectMessageChannels.length} DM chats
 ${bot.Messages.length} messages
+Bot is sharded? ${(argv.shardmode ? 'Yes, this is shard ' + argv.shardid + ', and ' + argv.shardcount + ' shards are propagated.' : 'No')}
 
 **Info**
 I'm developed and created by ${config.bot.senpai}

@@ -8,6 +8,7 @@ var DL = require('ytdl-core')
 var YT = require('youtube-dl')
 var Logger = require('./logger.js').Logger
 var Config = require('../../config.json')
+var config = require('../../config.json')
 
 exports.join = function (msg, suffix, bot) {
   if (bot.VoiceConnections.length > config.settings.musiclimit) {
@@ -24,7 +25,7 @@ exports.join = function (msg, suffix, bot) {
           })
           var joinmsg = []
           joinmsg.push(`Welcome to music jukebox, now playing in **${vc.voiceConnection.channel.name}** which you're currently connected to.`)
-          joinmsg.push(`You have 10 minutes to decide something while this waiting music plays, otherwise I'll shut down automatically.`)
+          joinmsg.push(`Decide something while this waiting music plays, otherwise I'll shut down automatically.`)
           joinmsg.push(`__**Music Commands**__`)
           joinmsg.push(`**${prefix}request** - *I will play a song for you, use a link from YouTube, Soundcloud or a mp3 uploaded file*`)
           joinmsg.push(`**${prefix}music pause** - *The current song will be paused if it's playing.*`)
@@ -55,7 +56,7 @@ exports.join = function (msg, suffix, bot) {
           })
           var joinmsg = []
           joinmsg.push(`Welcome to music jukebox, now playing in **${vc.voiceConnection.channel.name}** because you didn't specify a voice channel for joining.`)
-          joinmsg.push(`You have 10 minutes to decide something while this waiting music plays, otherwise I'll shut down automatically.`)
+          joinmsg.push(`Decide something while this waiting music plays, otherwise I'll shut down automatically.`)
           joinmsg.push(`__**Music Commands**__`)
           joinmsg.push(`**${prefix}request** - *I will play a song for you, use a link from YouTube, Soundcloud or a mp3 uploaded file*`)
           joinmsg.push(`**${prefix}music pause** - *The current song will be paused if it's playing.*`)
@@ -90,7 +91,7 @@ exports.join = function (msg, suffix, bot) {
               })
               var joinmsg = []
               joinmsg.push(`Welcome to music jukebox, now playing in **${vc.voiceConnection.channel.name}**.`)
-              joinmsg.push(`You have 10 minutes to decide something while this waiting music plays, otherwise I'll shut down automatically.`)
+              joinmsg.push(`Decide something while this waiting music plays, otherwise I'll shut down automatically.`)
               joinmsg.push(`__**Music Commands**__`)
               joinmsg.push(`**${prefix}request** - *I will play a song for you, use a link from YouTube, Soundcloud or a mp3 uploaded file*`)
               joinmsg.push(`**${prefix}music pause** - *The current song will be paused if it's playing.*`)
