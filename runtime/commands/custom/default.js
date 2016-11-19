@@ -37,25 +37,6 @@ Commands.say = {
 	}
     }
   }
-  
-Commands.devsay = {
-  name: 'devsay',
-  module: 'master',
-  timeout: 10,
-  level: 0,
-  fn: function (msg, suffix) {
-          msg.delete()
-      msg.channel.sendMessage(suffix)
-	}
-    }
-  
-Commands.announce = {
-  name: 'announce',
-  level: 'master',
-  fn: function (msg, suffix) {
-      msg.channel.sendMessage('@everyone ' + suffix)
-	}
-  }
 
 Commands.clean = {
   name: 'clean',
@@ -97,7 +78,7 @@ Commands.eval = {
   name: 'eval',
   level: 'master',
   fn: function (msg, suffix, bot) {
-    if (msg.author.id === bot.User.id) return // To statisfy our styleguide :P
+    if (msg.author.id === bot.User.id) return
     var util = require('util')
     try {
       var returned = eval(suffix)
@@ -142,7 +123,7 @@ Commands.plaineval = {
   name: 'plaineval',
   level: 'master',
   fn: function (msg, suffix, bot) {
-    if (msg.author.id === bot.User.id) return // To statisfy our styleguide :P
+    if (msg.author.id === bot.User.id) return
     var evalfin = []
     try {
       evalfin.push('```xl')
@@ -166,17 +147,6 @@ Commands.sleep = {
     bot.disconnect()
     Logger.warn('Bye bye! ^-^')
     process.exit(0)
-  }
-}
-
-Commands.restart = {
-  name: 'restart',
-  level: 'master',
-  fn: function (msg, suffix, bot) {
-	msg.channel.sendMessage('Restarting Hifumi...')
-	Logger.warn('Restarting...')
-    bot.disconnect()
-    bot.connect()
   }
 }
 

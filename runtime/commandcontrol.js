@@ -45,8 +45,7 @@ if (cus !== null) {
 exports.helpHandle = function (msg, suffix) {
   var msgArray = []
   var msgArraytwo = []
-  msgArray.push('Hello, my name is Hifumi and I\'m a multifunctional + music bot that will give you fun and is very easy to use.')
-    msgArray.push('**Hifumi commands**')
+    msgArray.push('**Commands**')
     msgArray.push('**Fun:** `' + config.settings.prefix + 'ball` `' + config.settings.prefix + 'choose` `' + config.settings.prefix + 'coinflip` `' + config.settings.prefix + 'dice` `' + config.settings.prefix + 'gif` `' + config.settings.prefix + 'hifumi` `' + config.settings.prefix + 'leetspeak` `' + config.settings.prefix + 'rate` `' + config.settings.prefix + 'roll` `' + config.settings.prefix + 'rps` `' + config.settings.prefix + 'say` `' + config.settings.prefix + 'talk`')
     msgArray.push('**Useful/Interests:** `' + config.settings.prefix + 'fact` `' + config.settings.prefix + 'catfacts` `' + config.settings.prefix + 'server-info` `' + config.settings.prefix + 'userinfo` `' + config.settings.prefix + 'advice` `' + config.settings.prefix + 'yesno` `' + config.settings.prefix + 'nicknames`')
 	msgArray.push('**Search:** `' + config.settings.prefix + 'urban` `' + config.settings.prefix + 'weather` `' + config.settings.prefix + 'google` `' + config.settings.prefix + 'twitch` `' + config.settings.prefix + 'cutecat`')
@@ -55,7 +54,7 @@ exports.helpHandle = function (msg, suffix) {
 	msgArray.push('**Tags:** `' + config.settings.prefix + 'tag create` `' + config.settings.prefix + 'tag edit` `' + config.settings.prefix + 'tag delete` `' + config.settings.prefix + 'tag owner`')
 	msgArray.push('**NSFW:** `' + config.settings.prefix + 'e621` `' + config.settings.prefix + 'rule34`')
 	msgArray.push('**Bot:** `' + config.settings.prefix + 'ping` `' + config.settings.prefix + 'about`')
-	msgArray.push('Detailed help about my commands can be found in my official website: http://hifumibot.tumblr.com/commands')
+	msgArray.push('Detailed help about my commands can be found here: http://hifumibot.tumblr.com/commands')
     msgArray.push('This bot is forked from Hifumi, a multifunctional Discord bot, take a look to our GitHub: https://github.com/Underforest/HifumiBot')
     msg.author.openDM().then((y) => {
       if (!msg.isPrivate) {
