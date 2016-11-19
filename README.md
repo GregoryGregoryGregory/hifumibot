@@ -31,5 +31,5 @@ See the [official wiki](https://github.com/Underforest/HifumiBot/wiki) for more 
   <a href="http://discord.gg/FtDbNrd"><img src="https://discordapp.com/api/guilds/227899389744513026/widget.png?style=banner2" alt="Discord server"></a>
 </p>
 <p align="center">
-Check out our Discord server and styleguide from the links above!
+Check out our Discord server in case of any problem or update!
 </p>
