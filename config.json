@@ -1,0 +1,23 @@
+{
+  "bot": {
+    "isbot": true,
+    "token": "here you need to paste the bot token here, for info see the wiki, same for values below",
+    "email": "optional, here you can write your discord email in case the token is broken",
+    "password": "optional, here you can write your discord password in case the token is broken",
+    "oauth": "here you need to paste your bot invite, optional too",
+	"senpai": "your name or aka here"
+  },
+  "settings": {
+    "prefix": "the prefix you want to set for the bot",
+	"musiclimit": "until what number of voice channels can your bot connect?"
+  },
+  "permissions": {
+    "master": ["your discord id, you can also paste more discord ids to make the users bot owners"],
+    "level1": ["optional, discord ids (users) listed here will be always in this level for every server"],
+    "level2": ["optional, same as above"],
+    "level3": ["optional, same as abovest"]
+  },
+    "google": "AIzaSyD-Zy5VXroyzHx4HEqTYWs4xXzZjXiBKt0",
+    "mashape": "85yfRQzvsFmshNn6HxjhhOuHvqytp1JKEeqjsnug11WERv50Mr"
+  }
+}

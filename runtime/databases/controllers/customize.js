@@ -1,0 +1,291 @@
+'use strict'
+var Db = require('nedb')
+var Logger = require('../../internal/logger.js').Logger
+var database = new Db({
+  filename: './runtime/databases/customize',
+  autoload: true
+})
+
+exports.prefix = function (msg) {
+  return new Promise(function (resolve, reject) {
+    if (msg.isPrivate) {
+      return resolve(false)
+    }
+    database.find({
+      _id: msg.guild.id
+    }, function (err, doc) {
+      if (err) {
+        reject(err)
+      } else if (doc) {
+        if (doc.length <= 0) {
+          initialize(msg.guild)
+          return reject()
+        }
+        try {
+          return resolve(doc[0].settings.prefix)
+        } catch (e) {
+          initialize(msg.guild)
+          return reject('Try/catch block reject!')
+        }
+      }
+    })
+  })
+}
+
+exports.check = function (guild) {
+  return new Promise(function (resolve, reject) {
+    database.find({
+      _id: guild.id
+    }, function (err, doc) {
+      if (err) {
+        reject(err)
+      } else if (doc) {
+        resolve(doc[0].settings.welcoming)
+      }
+    })
+  })
+}
+
+exports.reply = function (msg, what) {
+  return new Promise(function (resolve, reject) {
+    database.find({
+      _id: msg.guild.id
+    }, function (err, doc) {
+      if (err) {
+        reject(err)
+      } else if (doc) {
+        if (!doc[0].replies.hasOwnProperty(what)) {
+          reject('Something went wrong! If you don\'t understand how to use this command, type ``' + config.settings.prefix + 'customize help``.')
+        } else {
+          resolve(doc[0].replies[what])
+        }
+      }
+    })
+  })
+}
+
+exports.helpHandle = function (msg) {
+  // You will just have to deal with the fact that this is static
+  var arr = []
+  arr.push('**Hifumi customize setup**')
+  arr.push('\n')
+  arr.push('``' + config.settings.prefix + 'customize`` allows you to adjust my behaviour on this server.')
+  arr.push('Currently, I support the following.')
+  arr.push('\n')
+  arr.push('`nsfw`: Changes my reply when someones uses a NSFW command while I disallow that.')
+  arr.push('`permissions`: Changes my reply when someone tries to use a command they do not have access to.')
+  arr.push('`welcome`: Changes my welcoming message.')
+  arr.push('`welcoming`: Changes wether I should welcome new people.')
+  arr.push('`timeout`: Changes my reply when someones uses a command that is still in cooldown.')
+  arr.push('`prefix`: Changes the prefix I listen to on this server.')
+  arr.push('\n')
+  arr.push('Some customize methods support special words, here is what they are and how to use them.')
+  arr.push('**Note the following:**')
+  arr.push('```')
+  arr.push('You cannot use special words with welcoming or prefix.')
+  arr.push('All special words start with %.')
+  arr.push('You can use multiple special words within one message.')
+  arr.push('```')
+  arr.push('`%user`: Refers to the username of the user who triggered this response.')
+  arr.push('`%channel`: Refers to the channel wherein this response is triggered, does not work with welcome.')
+  arr.push('`%server`: Refers to the server name.')
+  arr.push('`%timeout`: Refers to the amount of seconds the used command cools down for, __can only be used with timeout__.')
+  arr.push('`%nlevel`: Short for NeedLevel. Refers to the access level an user needs to execute this command, __can only be used with permissions__.')
+  arr.push('`%ulevel`: Short for UserLevel. Refers to the access level an user has right now, __can only be used with permissions__.')
+  msg.author.openDM().then((y) => {
+    y.sendMessage(arr.join('\n'))
+  }).catch((e) => {
+    Logger.error(e)
+    msg.channel.sendMessage(':no_entry_sign: Oh oh! Try again!')
+  })
+}
+
+exports.restore = function (guild) {
+  return new Promise(function (resolve, reject) {
+    database.find({
+      _id: guild.id
+    }, function (err, docs) {
+      if (err) {
+        reject(err)
+      } else if (docs) {
+        if (docs.length > 0) {
+          database.remove({
+            _id: guild.id
+          }, function (err) {
+            if (err) {
+              return reject(err)
+            }
+          })
+        }
+      }
+      initialize(guild).then(() => {
+        return resolve(':white_check_mark: Done!')
+      }).catch((e) => {
+        return reject(e)
+      })
+    })
+  })
+}
+
+exports.adjust = function (msg, what, how) {
+  /* eslint indent: 0 */
+  return new Promise(function (resolve, reject) {
+    database.find({
+      _id: msg.guild.id
+    }, function (err, doc) {
+      if (err) {
+        reject(err)
+      } else if (doc) {
+        switch (what) {
+          case 'welcoming':
+            if (how !== 'off' && how !== 'private' && how !== 'channel') {
+              return reject(':warning: Welcoming can only be ``off``, ``private`` or ``channel``')
+            }
+            database.update({
+              _id: msg.guild.id
+            }, {
+              $set: {
+                'settings.welcoming': how
+              }
+            }, {}, function (err, doc) {
+              if (err) {
+                reject(err)
+              } else if (doc) {
+                resolve(how)
+              }
+            })
+            break
+          case 'nsfw':
+            database.update({
+              _id: msg.guild.id
+            }, {
+              $set: {
+                'replies.nsfw': how
+              }
+            }, {}, function (err, doc) {
+              if (err) {
+                reject(err)
+              } else if (doc) {
+                resolve(how)
+              }
+            })
+            break
+          case 'permissions':
+            database.update({
+              _id: msg.guild.id
+            }, {
+              $set: {
+                'replies.permissions': how
+              }
+            }, {}, function (err, doc) {
+              if (err) {
+                reject(err)
+              } else if (doc) {
+                resolve(how)
+              }
+            })
+            break
+          case 'welcome':
+            database.update({
+              _id: msg.guild.id
+            }, {
+              $set: {
+                'replies.welcome': how
+              }
+            }, {}, function (err, doc) {
+              if (err) {
+                reject(err)
+              } else if (doc) {
+                resolve(how)
+              }
+            })
+            break
+          case 'timeout':
+            database.update({
+              _id: msg.guild.id
+            }, {
+              $set: {
+                'replies.timeout': how
+              }
+            }, {}, function (err, doc) {
+              if (err) {
+                reject(err)
+              } else if (doc) {
+                resolve(how)
+              }
+            })
+            break
+          case 'prefix':
+            if (how.indexOf('"') === -1) {
+              return reject('`Put new prefixes between double quotes please.`')
+            }
+            database.update({
+              _id: msg.guild.id
+            }, {
+              $set: {
+                'settings.prefix': how.split('"')[1]
+              }
+            }, {}, function (err, doc) {
+              if (err) {
+                reject(err)
+              } else if (doc) {
+                resolve(how.split('"')[1])
+              }
+            })
+            break
+          default:
+            reject('Something went wrong! If you don\'t understand how to use this command, type ``' + config.settings.prefix + 'customize help``.')
+        }
+      }
+    })
+  })
+}
+
+function initialize (guild) {
+  return new Promise(function (resolve, reject) {
+    var doc = {
+      _id: guild.id,
+      replies: {
+        permissions: 'default',
+        welcome: 'default',
+        nsfw: 'default',
+        timeout: 'default'
+      },
+      settings: {
+        welcoming: false,
+        prefix: false
+      }
+    }
+    database.insert(doc, function (err, doc) {
+      if (err) {
+        reject(err)
+      } else if (doc) {
+        resolve('ok')
+      }
+    })
+  })
+}
+
+exports.isKnown = function (guild) {
+  return new Promise(function (resolve, reject) {
+    database.find({
+      _id: guild.id
+    }, function (err, docs) {
+      if (err) {
+        reject(err)
+      } else if (docs) {
+        if (docs.length <= 0) {
+          initialize(guild).then((r) => {
+            resolve(r)
+          }).catch((e) => {
+            reject(e)
+          })
+        } else {
+          resolve()
+        }
+      }
+    })
+  })
+}
+
+exports.Database = database
