@@ -1,4 +1,5 @@
 'use strict'
+var config = require('../../../config.json')
 var Db = require('nedb')
 var Logger = require('../../internal/logger.js').Logger
 var database = new Db({
