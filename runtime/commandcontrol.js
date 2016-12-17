@@ -42,13 +42,13 @@ if (cus !== null) {
   }
 }
 
-exports.helpHandle = function (msg, suffix) {
+exports.helpHandle = function (msg, suffix, bot) {
   var msgArray = []
   var msgArraytwo = []
   if (!suffix) {
-  msgArray.push('Hello, my name is ' + bot.User.username + ' and I\'m a multifunctional + music bot that will give you fun and is very easy to use.')
+  msgArray.push('You requested my command help so here it is.')
   msgArray.push('To get started, select your favorite command category with ``' + config.settings.prefix + 'help number`` and know more.\n')
-    msgArray.push('**' + bot.User.username + ' commands**')
+    msgArray.push('**Commands**')
 	msgArray.push('```')
 	msgArray.push('1. Fun/Misc.')
 	msgArray.push('2. Utilities')
@@ -74,10 +74,10 @@ exports.helpHandle = function (msg, suffix) {
 	msgArray.push(config.settings.prefix + 'rate - rate a user or character.')
 	msgArray.push(config.settings.prefix + 'rip - create a ripme.xyz link with the user you mention.')
 	msgArray.push(config.settings.prefix + 'roll - get a random number from 1 to 100.')
-	msgArray.push(config.settings.prefix + 'rps - play rock, paper and scissors with ' + bot.User.username + '.')
+	msgArray.push(config.settings.prefix + 'rps - play rock, paper and scissors.')
 	msgArray.push(config.settings.prefix + 'slap - slap someone.')
 	msgArray.push(config.settings.prefix + 'say - make the bot repeat something, mentions and invites are not allowed.')
-	msgArray.push(config.settings.prefix + 'talk - talk with ' + bot.User.username + ' and have a conversation (powered by Cleverbot)')
+	msgArray.push(config.settings.prefix + 'talk - talk and have a conversation (powered by Cleverbot)')
 	msgArray.push(config.settings.prefix + 'triggered - react with a Triggered meme.')
 	msgArray.push('```')
 	} else if (suffix === '2') {
@@ -86,7 +86,7 @@ exports.helpHandle = function (msg, suffix) {
 	msgArray.push(config.settings.prefix + 'advice - get a random advice for something random.')
 	msgArray.push(config.settings.prefix + 'fact - get a fact for something interesting.')
 	msgArray.push(config.settings.prefix + 'catfacts - get a curious cat fact.')
-	msgArray.push(config.settings.prefix + 'google - let ' + bot.User.username + ' google that for you!')
+	msgArray.push(config.settings.prefix + 'google - let me google that for you!')
 	msgArray.push(config.settings.prefix + 'nicknames - use this with a user to know his/her previous nicknames.')
 	msgArray.push(config.settings.prefix + 'server-info - get some information about the server you are in.')
 	msgArray.push(config.settings.prefix + 'twitch - search for a Twitch channel and know if he/she is streaming or not.')
@@ -108,19 +108,19 @@ exports.helpHandle = function (msg, suffix) {
 	} else if (suffix === '4') {
 	msgArray.push('**Music**')
 	msgArray.push('```')
-	msgArray.push(config.settings.prefix + 'music - ' + bot.User.username + ' will play music in the voice channel. You can specify one or not.')
-	msgArray.push(config.settings.prefix + 'request - ' + bot.User.username + ' will play a song for you, use a link from YouTube, Soundcloud or a mp3 uploaded file')
-	msgArray.push(config.settings.prefix + 'listenmoe - ' + bot.User.username + ' will play listen.moe radio station.')
-	msgArray.push(config.settings.prefix + 'radio - ' + bot.User.username + ' will play a radio stream file for you. Use ' + config.settings.prefix + 'radio help to know how to get stream link of your favorite station.')
+	msgArray.push(config.settings.prefix + 'music - I will play music in the voice channel. You can specify one or not.')
+	msgArray.push(config.settings.prefix + 'request - I will play a song for you, use a link from YouTube, Soundcloud or a mp3 uploaded file')
+	msgArray.push(config.settings.prefix + 'listenmoe - I will play listen.moe radio station.')
+	msgArray.push(config.settings.prefix + 'radio - I will play a radio stream file for you. Use ' + config.settings.prefix + 'radio help to know how to get stream link of your favorite station.')
 	msgArray.push(config.settings.prefix + 'youtube - search something in YouTube.')
     msgArray.push(config.settings.prefix + 'song pause - The current song will be paused if it\'s playing.')
     msgArray.push(config.settings.prefix + 'song play - The current song will be resumed if it\'s paused.')
     msgArray.push(config.settings.prefix + 'volume - Change the volume of the current song.')
-    msgArray.push(config.settings.prefix + 'playlist - List upcoming requested songs. ' + bot.User.username + ' will show this in order.')
+    msgArray.push(config.settings.prefix + 'playlist - List upcoming requested songs. I will show this in order.')
     msgArray.push(config.settings.prefix + 'shuffle - Shuffle the music playlist and songs will be played in random order.')
     msgArray.push(config.settings.prefix + 'skip - Vote to skip the current song if you don\'t like it.')
     msgArray.push(config.settings.prefix + 'forceskip - Force skip the current song.')
-    msgArray.push(config.settings.prefix + 'shutdown - ' + bot.User.username + ' will no longer play music in the voice channel.')
+    msgArray.push(config.settings.prefix + 'shutdown - I will no longer play music in the voice channel.')
 	msgArray.push('```')
 	} else if (suffix === '5') {
 	msgArray.push('**Tags**')
