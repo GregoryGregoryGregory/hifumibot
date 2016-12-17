@@ -3,7 +3,8 @@
     "isbot": true,
     "token": "the bot token",
     "email": "if the token brokes, put your discord email here, optional",
-    "password": "if the token brokes, put your discord pass here, optional"
+    "password": "if the token brokes, put your discord pass here, optional",
+    "clientid": "the client id of the bot"
   },
   "settings": {
     "prefix": "the bot prefix"
