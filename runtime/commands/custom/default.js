@@ -4,8 +4,6 @@ var config = require('../../../config.json')
 var Logger = require('../../internal/logger.js').Logger
 var argv = require('minimist')(process.argv.slice(2))
 
-//English -START-
-
 Commands.ping = {
   name: 'ping',
   module: 'default',
@@ -251,7 +249,7 @@ Commands.invite = {
   timeout: 10,
   level: 0,
   fn: function (msg, suffix, bot) {
-  msg.channel.sendMessage ('Use this link to invite me to your server:\n**NOTE: Select all permissions as needed but it\'s recommendable to keep enabled all, so I can work fine.**\nOverall permissions: <https://discordapp.com/oauth2/authorize?client_id=' + bot.User.id + '&scope=bot&permissions=2146958463>\nNo permissions/role: <https://discordapp.com/oauth2/authorize?client_id=' + bot.User.id + '&scope=bot&permissions=0>')
+  msg.channel.sendMessage ('Use this link to invite me to your server:\n**NOTE: Select all permissions as needed but it\'s recommendable to keep enabled all, so I can work fine.**\nOverall permissions: <https://discordapp.com/oauth2/authorize?client_id=' + config.bot.clientid + '&scope=bot&permissions=2146958463>\nNo permissions/role: <https://discordapp.com/oauth2/authorize?client_id=' + config.bot.clientid + '&scope=bot&permissions=0>')
   }
 }
 
@@ -386,7 +384,5 @@ Commands.leave = {
     } 
 }
 }
-
-  //English -FINISH-
 
 exports.Commands = Commands
