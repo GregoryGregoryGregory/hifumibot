@@ -1,5 +1,5 @@
 <p style="text-align:center;">
-<a href="http://hifumibot.tumblr.com/"><img src="http://puu.sh/sn7Z9.jpg"></a></p>
+<a href="http://underforest.github.io/hifumibot"><img src="http://puu.sh/sn7Z9.jpg"></a></p>
 
 <p align="center">
 <a href="http://nodejs.org"><img src="https://img.shields.io/badge/Node.js-7.2.1-blue.svg" alt="Node JS"></a>
