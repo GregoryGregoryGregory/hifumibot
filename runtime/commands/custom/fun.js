@@ -9,8 +9,6 @@ Cb.prepare(function () {
   Logger.debug('Launched cleverbot')
 })
 
-//English -START-
-
 Commands.gif = {
   name: 'gif',
   timeout: 10,
