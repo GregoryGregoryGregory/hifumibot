@@ -1,11 +1,11 @@
 'use strict'
-var config = require('../../../config.json')
 var Db = require('nedb')
 var Logger = require('../../internal/logger.js').Logger
 var database = new Db({
   filename: './runtime/databases/customize',
   autoload: true
 })
+var config = require('../../../config.json')
 
 exports.prefix = function (msg) {
   return new Promise(function (resolve, reject) {
@@ -66,9 +66,8 @@ exports.reply = function (msg, what) {
 }
 
 exports.helpHandle = function (msg) {
-  // You will just have to deal with the fact that this is static
   var arr = []
-  arr.push('**Hifumi customize setup**')
+  arr.push('**Customize setup**')
   arr.push('\n')
   arr.push('``' + config.settings.prefix + 'customize`` allows you to adjust my behaviour on this server.')
   arr.push('Currently, I support the following.')

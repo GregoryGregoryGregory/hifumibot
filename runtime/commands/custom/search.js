@@ -6,8 +6,8 @@ var argv = require('minimist')(process.argv.slice(2))
 let axios = require('axios'),
     moment = require('moment'),
     compass = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"],
-    xml2js = require('xml2js');
-	fix = require('entities');
+    xml2js = require('xml2js')
+	fix = require('entities')
 
 Commands.weather = {
   name: 'weather',
@@ -90,7 +90,6 @@ Commands['server-info'] = {
   timeout: 20,
   level: 0,
   fn: function (msg) {
-    // if we're not in a PM, return some info about the channel
     if (msg.guild) {
       var roles = msg.guild.roles.map((r) => r.name)
       roles = roles.splice(0, roles.length).join(', ').toString()
@@ -118,7 +117,7 @@ Commands['server-info'] = {
       }
       msg.channel.sendMessage(msgArray.join('\n'))
     } else {
-      msg.channel.sendMessage("e.e")
+      msg.channel.sendMessage("You can't use this in DM! Baka~")
     }
   }
 }
@@ -127,7 +126,6 @@ Commands['server-info'] = {
 Commands.setstatus = {
   name: 'setstatus',
   module: 'default',
-  usage: '<online / idle / twitch url> [playing status]',
   level: 'master',
   fn: function (msg, suffix, bot) {
     var first = suffix.split(' ')
@@ -137,19 +135,22 @@ Commands.setstatus = {
         name: suffix.substring(first[0].length + 1),
         url: first[0]
       })
-      msg.channel.sendMessage(`Set status to streaming with message: ${suffix.substring(first[0].length + 1)}`)
-    } else {
-      if (['online', 'idle'].indexOf(first[0]) > -1) {
+      msg.channel.sendMessage(`Set status to streaming with message: "${suffix.substring(first[0].length + 1)}"`)
+    } else if (['online', 'idle'].indexOf(first[0]) > -1) {
         bot.User.setStatus(first[0], {
           name: suffix.substring(first[0].length + 1)
         })
-        msg.channel.sendMessage(`Set status to ${first[0]} with message: ${suffix.substring(first[0].length + 1)}`)
+        msg.channel.sendMessage(`Set status to ${first[0]} with message: "${suffix.substring(first[0].length + 1)}"`)
+	} else if (['dnd'].indexOf(first[0]) > -1) {
+        bot.User.setStatus(first[0], {
+          name: suffix.substring(first[0].length + 1)
+        })
+        msg.channel.sendMessage(`Set status to ${first[0]} with message: "${suffix.substring(first[0].length + 1)}"`)
       } else {
-        msg.reply('Please mention something like ' + config.settings.prefix + 'setstatus online game, ' + config.settings.prefix + 'setstatus idle or ' + config.settings.prefix + 'setstatus twitch url')
+        msg.reply(':no_entry_sign: Incorrect usage!')
       }
     }
   }
-}
 
 Commands.userinfo = {
   name: 'userinfo',
@@ -192,7 +193,7 @@ Commands.userinfo = {
         var roles = member.roles.map((r) => r.name)
         roles = roles.splice(0, roles.length).join(', ')
         msgArray.push('Information requested by ' + msg.author.username)
-        msgArray.push('```', 'Requested user: ' + user.username + '#' + user.discriminator)
+        msgArray.push('Requested user: ' + user.username + '#' + user.discriminator)
         msgArray.push('ID: ' + user.id)
         msgArray.push('Status: ' + user.status)
         msgArray.push('Signed up in: ' + user.registeredAt)
@@ -211,6 +212,39 @@ Commands.userinfo = {
       })
     })
   }
+}
+
+Commands.hat = {
+  name: 'hat',
+  noDM: true,
+  level: 0,
+  timeout: 5,
+  fn: function (msg, suffix, bot) {
+	  if (msg.isPrivate) {
+      msg.channel.sendMessage("Sorry, christmas hat avatar function is not available for DMs.")
+      }
+	  if (msg.mentions.length === 0) {
+		  msg.channel.sendMessage('*Your christmas hat avatar is ready and it\'s now uploaded! Merry christmas!*\nURL: <https://hats.discord.pw/?h=december.png&a=avatars/' + msg.author.id + '/' + msg.author.avatar + '>\n\nTo download your avatar, go to the above link and click at the "Download my new avatar!" button on the page bottom.\nIf you find that your hat is wrongly placed, you can place it yourself there.\nCommand powered by abal\'s HatBot API.')
+  } else if (msg.mentions.length === 1 && msg.mentions[0].id === bot.User.id) {
+  msg.channel.sendMessage('I already have a christmas hat! ¯\\_(ツ)_/¯')
+  } else if (suffix === '@everyone' || suffix === '@here') {
+	  msg.channel.sendMessage(':no_entry_sign: What? I can\'t give christmas avatars for everyone.') 
+  } else if (!msg.author.avatarURL) {
+	msg.channel.sendMessage(':no_entry_sign: You\'re not using an avatar!')  
+  } else {
+       msg.mentions.map(function (user) {
+		var guild = msg.guild
+        var member = guild.members.find((m) => m.id === user.id)
+        if (user.avatarURL) {
+		 msg.channel.sendMessage('*Your christmas hat avatar is ready and it\'s now uploaded!*\nURL: <https://hats.discord.pw/?h=december.png&a=avatars/' + user.id + '/' + user.avatar + '>\n\nTo download your avatar, go to the above link and click at the "Download my new avatar!" button on the page bottom.\nIf you find that your hat is wrongly placed, you can place it yourself there.\nCommand powered by abal\'s HatBot API.')
+        } else if (!user.avatarURL) {
+		 msg.channel.sendMessage(':no_entry_sign: Sorry, the user you mentioned doesn\'t have an avatar or it\'s using a guest account.')
+		} else {
+		 msg.channel.sendMessage(':no_entry_sign: Something went wrong, try again later.')
+		}
+})
+}
+}
 }
 
 //Spanish

@@ -32,14 +32,35 @@ Commands.rip = {
   module: 'fun',
   timeout: 5,
   level: 0,
-  fn: function (msg, suffix) {
-  msg.channel.sendMessage('http://www.tombstonebuilder.com/generate.php?top1=&top2=Rest+in+peace&top3=' + suffix.replace(" ", "+") + '&top4=&sp=')
-}
+  fn: function (msg, suffix, bot) {
+    var qs = require('querystring')
+    var resolve = []
+    var skipped = false
+    if (msg.mentions.length > 0) {
+      for (var m of msg.mentions) {
+        if (m.id !== bot.User.id) {
+          if (resolve[0] === undefined) {
+            resolve[0] = m.username
+          } else {
+            resolve[0] += ' and ' + m.username
+          }
+        } else {
+          skipped = true
+        }
+      }
+    } else if (suffix) {
+      resolve[0] = suffix
+    }
+    if (skipped === true && msg.mentions.length === 1 && suffix) {
+      resolve[0] = suffix
+    }
+    msg.channel.sendMessage('<http://ripme.xyz/' + qs.stringify(resolve).substr(2) + '>')
+  }
 }
 
 Commands.advice = {
   name: 'advice',
-  noDM: true, // Ratelimits Ratelimits Ratelimits Ratelimits
+  noDM: true,
   timeout: 5,
   level: 0,
   fn: function (msg) {
@@ -83,7 +104,7 @@ Commands.urban = {
           msgArray.push('```')
           msg.channel.sendMessage(msgArray.join('\n'))
         } else {
-          msg.reply(suffix + ": ERROR 404: Urban Dictionary doesn't have this word on the database.")
+          msg.reply(suffix + "\nWord not found.")
         }
       }
     })
@@ -109,7 +130,7 @@ Commands.fact = {
           try {
             msg.reply(result.facts.fact[0])
           } catch (e) {
-            msg.channel.sendMessage(':x: Something went wrong.')
+            msg.channel.sendMessage(':no_entry_sign: Something went wrong.')
           }
         })
       }
@@ -134,7 +155,7 @@ Commands.dice = {
         try {
           JSON.parse(body)
         } catch (e) {
-          msg.channel.sendMessage(':x: Something went wrong.')
+          msg.channel.sendMessage(':no_entry_sign: Something went wrong.')
           return
         }
         var roll = JSON.parse(body)
@@ -164,9 +185,9 @@ Commands.talk = {
   level: 0,
 fn: function (msg, suffix) {
 	if (!suffix) {
-		          msg.channel.sendMessage(':speech_left: Yes?')
-} else {
-    msg.channel.sendTyping()
+     msg.channel.sendMessage(':speech_left: Yes?')
+} else {	
+     msg.channel.sendTyping()
     var type = setInterval(function () {
       msg.channel.sendTyping()
     }, 5000)
@@ -183,18 +204,20 @@ Commands.cutecat = {
   timeout: 5,
   level: 0,
   fn: function (msg) {
-    unirest.get('https://nijikokun-random-cats.p.mashape.com/random')
-      .header('X-Mashape-Key', config.api_keys.mashape)
-      .header('Accept', 'application/json')
-      .end(function (result) {
+	 var request = require('request')
+	 request('http://random.cat/meow', function (error, response, body) {
+      if (!error && response.statusCode === 200) {
         try {
-          msg.reply(result.body.source)
+          JSON.parse(body)
         } catch (e) {
-          Logger.error(e)
-          msg.reply(':x: Something went wrong.')
+          msg.channel.sendMessage(':no_entry_sign: Something went wrong.')
+          return
         }
-      })
-  }
+        var cat = JSON.parse(body)
+        msg.reply(cat.file)
+      }
+    })
+}
 }
 
 Commands.catfacts = {
@@ -208,7 +231,7 @@ Commands.catfacts = {
         try {
           JSON.parse(body)
         } catch (e) {
-          msg.channel.sendMessage(':x: Something went wrong.')
+          msg.channel.sendMessage(':no_entry_sign: Something went wrong.')
           return
         }
         var catFact = JSON.parse(body)
@@ -229,7 +252,7 @@ Commands.yesno = {
         try {
           JSON.parse(body)
         } catch (e) {
-          msg.channel.sendMessage(':x: Something went wrong.')
+          msg.channel.sendMessage(':no_entry_sign: Something went wrong.')
           return
         }
         var yesNo = JSON.parse(body)
@@ -241,127 +264,56 @@ Commands.yesno = {
 
 Commands.e621 = {
   name: 'e621',
-  usage: '<tags> multiword tags need to be typed like: wildbeast_is_a_discord_bot',
+  timeout: 10,
   level: 0,
   nsfw: true,
   fn: function (msg, suffix) {
-	  if (suffix === 'hifumi') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'hifumi takimoto') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'hifumi new game') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'takimoto hifumi') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'hifumi nyu gemu') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'h1fum1') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 't4k1m0t0 h1fum1') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'hifumin') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'HIFUMI') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'HIFUMI TAKIMOTO') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'HIFUMI NEW GAME') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'TAKIMOTO HIFUMI') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'HIFUMI NEW GAME') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'HIFUMI NYU GEMU') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'H1FUM1') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'T4K1M0T0 H1FUM1') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'HIFUMIN') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === '滝本 ひふみ') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === '滝本ひふみ') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === '滝本 ひふみ ニューゲーム') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === '滝本ひふみ ニューゲーム') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'ひふみ') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'ひふみん') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === '滝本ひふみん') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === '滝本ひふみん ニューゲーム') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === '滝本ひふみん NEW GAME') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'NEW GAME 滝本ひふみん') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'NEW GAME 滝本ひふみ') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === '滝本Hifumi') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === '滝本 Hifumi') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'Takimoto ひふみ') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'Takimoto ひふみん') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'Underforest') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else if (suffix === 'underforest') {
-  msg.channel.sendMessage(':anger: YOU WON\'T SEARCH THAT! https://67.media.tumblr.com/bba13c2f1c0f13c1c8619f78519f8713/tumblr_ocasr1G9NO1s21xzoo1_500.gif')
-  } else {
-    msg.channel.sendTyping()
+msg.channel.sendTyping()
     unirest.post(`https://e621.net/post/index.json?limit=30&tags=${suffix}`)
       .headers({
         'Accept': 'application/json',
         'User-Agent': 'Unirest Node.js'
       })
-      // Fetching 30 posts from E621 with the given tags
       .end(function (result) {
         if (result.body.length < 1) {
-          msg.reply('Sorry, nothing found.') // Correct me if it's wrong.
+          msg.reply('Sorry, nothing found.')
   } else {
           var count = Math.floor((Math.random() * result.body.length))
           var FurryArray = []
           if (suffix) {
-            FurryArray.push(`${msg.author.mention}` + '`, your results for `' + suffix + '`')
+            FurryArray.push(msg.author.mention + ', your results for ' + suffix + '\n' + result.body[count].file_url)
           } else {
-            FurryArray.push(`${msg.author.mention}` + ', you didn\'t specified something so this is a random picture')
-          } // hehe no privacy if you do the nsfw commands now.
-          FurryArray.push(result.body[count].file_url)
+            FurryArray.push(msg.author.mention + ', your results for ' + suffix + '\n' + result.body[count].file_url)
+          }
           msg.channel.sendMessage(FurryArray.join('\n'))
         }
       })
   }
 }
-}
 
 Commands.rule34 = {
   name: 'rule34',
+  timeout: 10,
   level: 0,
   nsfw: true,
   fn: function (msg, suffix) {
-    msg.channel.sendTyping()
+msg.channel.sendTyping()
     unirest.post('http://rule34.xxx/index.php?page=dapi&s=post&q=index&tags=' + suffix) // Fetching 100 rule34 pics
       .end(function (result) {
         var xml2js = require('xml2js')
         if (result.body.length < 75) {
-          msg.reply('Sorry, nothing found.') // Correct me if it's wrong.
+          msg.reply('Sorry, nothing found.')
         } else {
           xml2js.parseString(result.body, (err, reply) => {
             if (err) {
-              msg.channel.sendMessage(':x: Something went wrong.')
+              msg.channel.sendMessage(':no_entry_sign: Something went wrong.')
             } else {
               var count = Math.floor((Math.random() * reply.posts.post.length))
               var FurryArray = []
               if (!suffix) {
                 FurryArray.push(msg.author.mention + ", you didn\'t specified something so this is a random picture")
               } else {
-                FurryArray.push(msg.author.mention + ", your resuls for `" + suffix + '`')
+                FurryArray.push(msg.author.mention + ", your resuls for " + suffix)
               }
               FurryArray.push('http:' + reply.posts.post[count].$.file_url)
               msg.channel.sendMessage(FurryArray.join('\n'))
@@ -372,39 +324,59 @@ Commands.rule34 = {
   }
 }
 
-Commands.e621 = {
-  name: 'e621',
-  usage: '<tags> multiword tags need to be typed like: wildbeast_is_a_discord_bot',
+Commands.konachan = {
+  name: 'konachan',
+  timeout: 10,
   level: 0,
   nsfw: true,
   fn: function (msg, suffix) {
-    msg.channel.sendTyping()
-    unirest.post(`https://e621.net/post/index.json?limit=30&tags=${suffix}`)
+unirest.post(`https://konachan.com/post.json?limit=500&tags=${suffix}+%20order%3Ascore+%20rating:explicit`)
       .headers({
         'Accept': 'application/json',
         'User-Agent': 'Unirest Node.js'
       })
-      // Fetching 30 posts from E621 with the given tags
       .end(function (result) {
         if (result.body.length < 1) {
-          msg.reply('Sorry, nothing found.') // Correct me if it's wrong.
+          msg.reply('Sorry, nothing found.') 
   } else {
           var count = Math.floor((Math.random() * result.body.length))
-          var FurryArray = []
+          var Konachan = []
           if (suffix) {
-            FurryArray.push(`${msg.author.mention}` + '`, your results for `' + suffix + '`')
+            Konachan.push(msg.author.mention + ', your results for ' + suffix)
           } else {
-            FurryArray.push(`${msg.author.mention}` + ', you didn\'t specified something so this is a random picture')
-          } // hehe no privacy if you do the nsfw commands now.
-          FurryArray.push(result.body[count].file_url)
-          msg.channel.sendMessage(FurryArray.join('\n'))
+            Konachan.push(msg.author.mention + ', you didn\'t specified something so this is a random picture')
+          }
+          Konachan.push(result.body[count].file_url)
+          msg.channel.sendMessage(Konachan.join('\n'))
         }
       })
   }
 }
 
-Commands.ball = {
-  name: 'ball',
+Commands.greenteaneko = {
+  name: 'greenteaneko',
+  timeout: 5,
+  level: 0,
+  nsfw: true,
+  fn: function (msg, suffix) {
+    var request = require('request')
+    request('https://rra.ram.moe/i/r?type=nsfw-gtn&nsfw=true', function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+        try {
+          JSON.parse(body)
+        } catch (e) {
+          msg.channel.sendMessage(':no_entry_sign: Something went wrong.')
+          return
+        }
+        var gtn = JSON.parse(body)
+        msg.reply('https://rra.ram.moe' + gtn.path + '\nSupport the artist: ``https://www.patreon.com/collateralds``')
+      }
+    })
+  }
+}
+
+Commands['8ball'] = {
+  name: '8ball',
   module: 'fun',
   timeout: 5,
   level: 0,
@@ -423,8 +395,9 @@ Commands.ball = {
 	'Most likely',
 	'Outlook good',
 	'Yes',
+	'Sure',
 	'Signs point to yes',
-	'Reply hazy try again',
+	'Reply hazy, try again',
 	'Ask again later',
 	'Better not tell you now',
 	'Cannot predict now',
@@ -433,7 +406,8 @@ Commands.ball = {
 	'My reply is no',
 	'My sources say no',
 	'Outlook not so good',
-	'Very doubtful'
+	'Very doubtful',
+	'Who cares?'
     ]
     var answer = answers[Math.floor(Math.random() * answers.length)]
     msg.channel.sendMessage(':crystal_ball: ' + msg.author.mention + ', for your question: **' + suffix + '** :arrow_right: __' + answer + '__')
@@ -446,117 +420,15 @@ Commands.roll = {
   timeout: 5,
   level: 0,
   fn: function (msg) {
-    var answers = [
-      '1',
-	  '2',
-	  '3',
-	  '4',
-	  '5',
-	  '6',
-	  '7',
-	  '8',
-	  '9',
-	  '10',
-	  '11',
-	  '12',
-	  '13',
-	  '14',
-	  '15',
-	  '16',
-	  '17',
-	  '18',
-	  '19',
-	  '20',
-	  '21',
-	  '22',
-	  '23',
-	  '24',
-	  '25',
-	  '26',
-	  '27',
-	  '28',
-	  '29',
-	  '30',
-	  '31',
-	  '32',
-	  '33',
-	  '34',
-	  '35',
-	  '36',
-	  '37',
-	  '38',
-	  '39',
-	  '40',
-	  '41',
-	  '42',
-	  '43',
-	  '44',
-	  '45',
-	  '46',
-	  '47',
-	  '48',
-	  '49',
-	  '50',
-	  '51',
-	  '52',
-	  '53',
-	  '54',
-	  '55',
-	  '56',
-	  '57',
-	  '58',
-	  '59',
-	  '60',
-	  '61',
-	  '62',
-	  '63',
-	  '64',
-	  '65',
-	  '66',
-	  '67',
-	  '68',
-	  '69',
-	  '70',
-	  '71',
-	  '72',
-	  '73',
-	  '74',
-	  '75',
-	  '76',
-	  '77',
-	  '78',
-	  '79',
-	  '80',
-	  '81',
-	  '82',
-	  '83',
-	  '84',
-	  '85',
-	  '86',
-	  '87',
-	  '88',
-	  '89',
-	  '90',
-	  '91',
-	  '92',
-	  '93',
-	  '94',
-	  '95',
-	  '96',
-	  '97',
-	  '98',
-	  '99',
-	  '100'
-    ]
-    var answer = answers[Math.floor(Math.random() * answers.length)]
-    msg.channel.sendMessage(':game_die ' + msg.author.mention + ' rolled from 1 to 100 and got ' + answer)
+    var answer = Math.floor((Math.random() * 100) + 1)
+    msg.channel.sendMessage(':game_die: ' + msg.author.mention + ' rolled from 1 to 100 and got ' + answer)
   }
 }
 
 Commands.rps = {
   name: 'rps',
   module: 'fun',
-  usage: '<your choose, if it is rock, paper or scissors>',
+
   timeout: 3,
   level: 0,
   fn: function (msg, suffix) {
@@ -633,8 +505,10 @@ Commands.rate = {
     var answer = answers[Math.floor(Math.random() * answers.length)]
 	if (msg.mentions.length === 1 && msg.mentions[0].id === bot.User.id) {
   msg.channel.sendMessage(':ok_hand: I\'ll rate myself a 10/10 because I\'m the best \:D/')
+  } else if (suffix === '@everyone' || suffix === '@here') {
+	  msg.channel.sendMessage(':joy: What the heck are you trying to do? No, thanks!')  
   } else {
-  msg.channel.sendMessage(':ok_hand: ' + suffix + ' received a ' + answer + ' from me')
+  msg.channel.sendMessage(':ok_hand: ' + suffix + ' recieved a ' + answer + ' from me')
       }
 }
 }
@@ -645,14 +519,56 @@ Commands.choose = {
   timeout: 3,
   level: 0,
   fn: function (msg, suffix) {
-        if (!suffix || suffix.split(",").length < 2) msg.channel.sendMessage(":x: Something went wrong, try again.").catch();
-        else {
-            let choices = suffix.split(",");
+        if (!suffix || suffix.split(", ").length < 2) {
+			msg.channel.sendMessage(":no_entry_sign: Something went wrong, try again. Remember to separate options with a comma and input 2 options or more.")
+        } else {
+            let choices = suffix.split(", ");
             msg.channel.sendMessage(":thinking: " + msg.author.username + ", if I had to choose the best option, I would pick " + choices[Math.floor(Math.random() * (choices.length))] + ".").catch();
         }
     }
 }
 
-//English -FINISH-
+Commands.slap = {
+  name: 'slap',
+  noDM: true,
+  level: 0,
+  timeout: 5,
+  fn: function (msg, suffix, bot) {
+	  if (!suffix) {
+		  msg.channel.sendMessage(':anger: You can\'t slap nobody!')
+  } else if (msg.mentions.length === 1 && msg.mentions[0].id === bot.User.id) {
+  msg.channel.sendMessage(':anger: ' + msg.author.mention + ' slapped ' + suffix + '! Now it has its cheek purple.')
+  msg.channel.sendMessage(':anger: **BUT** ' + bot.User.username + ' slaps ' + msg.author.mention + ' back and attacks with a laser beam, now it\'s in the hospital recovering health and regretting of this very deeply.')
+  msg.reply('ggwp')
+  } else if (msg.mentions.length === 1 && msg.mentions[0].id === msg.author.id) {
+  msg.channel.sendMessage(':anger: ' + msg.author.mention + ' slapped him(her)self! Now it has its cheek purple.')
+  } else if (suffix === '@everyone' || suffix === '@here') {
+	  msg.channel.sendMessage(':anger: What?') 
+  } else {
+      msg.channel.sendMessage(':anger: ' + msg.author.mention + ' slapped ' + suffix + '! Now it has his/her cheek purple. Baka!')
+    }
+}
+}
+
+Commands.triggered = {
+  name: 'triggered',
+  level: 0,
+  timeout: 5,
+  fn: function (msg, suffix) {
+    var request = require('request')
+    request('https://rra.ram.moe/i/r?type=triggered', function (error, response, body) {
+      if (!error && response.statusCode === 200) {
+        try {
+          JSON.parse(body)
+        } catch (e) {
+          msg.channel.sendMessage(':no_entry_sign: Something went wrong.')
+          return
+        }
+        var trig = JSON.parse(body)
+        msg.reply('https://rra.ram.moe' + trig.path)
+      }
+    })
+  }
+}
 
 exports.Commands = Commands

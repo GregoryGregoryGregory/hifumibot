@@ -8,13 +8,9 @@ var DL = require('ytdl-core')
 var YT = require('youtube-dl')
 var Logger = require('./logger.js').Logger
 var Config = require('../../config.json')
-var config = require('../../config.json')
 
 exports.join = function (msg, suffix, bot) {
-  if (bot.VoiceConnections.length > config.settings.musiclimit) {
-    msg.channel.sendMessage(':no_entry_sign: Error while starting up my music system. All streaming slots are taken! Try again later. :cry:')
-  } else {
-    var voiceCheck = bot.VoiceConnections.find((r) => r.voiceConnection.guild.id === msg.guild.id)
+var voiceCheck = bot.VoiceConnections.find((r) => r.voiceConnection.guild.id === msg.guild.id)
     if (!voiceCheck && !suffix) {
       var VC = msg.member.getVoiceChannel()
       if (VC) {
@@ -24,24 +20,31 @@ exports.join = function (msg, suffix, bot) {
             if (r !== false) prefix = r
           })
           var joinmsg = []
-          joinmsg.push(`Welcome to music jukebox, now playing in **${vc.voiceConnection.channel.name}** which you're currently connected to.`)
-          joinmsg.push(`Decide something while this waiting music plays, otherwise I'll shut down automatically.`)
-          joinmsg.push(`__**Music Commands**__`)
-          joinmsg.push(`**${prefix}request** - *I will play a song for you, use a link from YouTube, Soundcloud or a mp3 uploaded file*`)
-          joinmsg.push(`**${prefix}music pause** - *The current song will be paused if it's playing.*`)
-          joinmsg.push(`**${prefix}music play** - *The current song will be resumed if it's paused.*`)
+		joinmsg.push(`Welcome to ${bot.User.username}'s music jukebox, now playing in **${vc.voiceConnection.channel.name}** which you're currently connected to.`)
+		  joinmsg.push(`You have 10 minutes to decide something while this waiting music plays, otherwise I'll shut down automatically.`)
+          joinmsg.push(`__**Search commands**__`)
+          joinmsg.push(`**${prefix}youtube** - *Search a video on YouTube to use it for request command.*`)
+		  joinmsg.push(`__**Radio commands**__`)
+          joinmsg.push(`**${prefix}listenmoe** - *Play listen.moe on the voice channel.*`)
+		  joinmsg.push(`**${prefix}radio** - *Play a radio file (.m3u or similar) on the voice channel.*`)
+		  joinmsg.push(`**${prefix}radio help** - *Show help instructions to play a station at your voice channel.*`)
+		  joinmsg.push(`__**Music commands**__`)
+          joinmsg.push(`**${prefix}request** - *${bot.User.username} will play a song for you, use a link from YouTube, Soundcloud or a mp3 uploaded file*`)
+          joinmsg.push(`**${prefix}song pause** - *The current song will be paused if it's playing.*`)
+          joinmsg.push(`**${prefix}song play** - *The current song will be resumed if it's paused.*`)
           joinmsg.push(`**${prefix}volume** - *Change the volume of the current song.*`)
-          joinmsg.push(`**${prefix}playlist** - *List upcoming requested songs. Hifumi will show this in order.*`)
+          joinmsg.push(`**${prefix}playlist** - *List upcoming requested songs. ${bot.User.username} will show this in order.*`)
           joinmsg.push(`**${prefix}shuffle** - *Shuffle the music playlist and songs will be played in random order.*`)
           joinmsg.push(`**${prefix}skip** - *Vote to skip the current song if you don't like it.*`)
           joinmsg.push(`**${prefix}forceskip** - *Force skip the current song.*`)
-          joinmsg.push(`**${prefix}shutdown** - *I will no longer play music in the voice channel.*`)
+          joinmsg.push(`**${prefix}shutdown** - *${bot.User.username} will no longer play music in the voice channel.*`)
+		  joinmsg.push(`**NOTE:** If ${bot.User.username}'s music jukebox is bugging too much, try to change your server region.`)
           msg.channel.sendMessage(joinmsg.join('\n'))
           status[msg.guild.id] = true
           time[msg.guild.id] = setTimeout(function () {
             leave(bot, msg)
             status[msg.guild.id] = false
-          }, 660000)
+          }, 600000)
           waiting(vc)
         }).catch((err) => {
           if (err.message === 'Missing permission') {
@@ -55,24 +58,31 @@ exports.join = function (msg, suffix, bot) {
             if (r !== false) prefix = r
           })
           var joinmsg = []
-          joinmsg.push(`Welcome to music jukebox, now playing in **${vc.voiceConnection.channel.name}** because you didn't specify a voice channel for joining.`)
-          joinmsg.push(`Decide something while this waiting music plays, otherwise I'll shut down automatically.`)
-          joinmsg.push(`__**Music Commands**__`)
-          joinmsg.push(`**${prefix}request** - *I will play a song for you, use a link from YouTube, Soundcloud or a mp3 uploaded file*`)
-          joinmsg.push(`**${prefix}music pause** - *The current song will be paused if it's playing.*`)
-          joinmsg.push(`**${prefix}music play** - *The current song will be resumed if it's paused.*`)
+          joinmsg.push(`Welcome to ${bot.User.username}'s music jukebox, now playing in **${vc.voiceConnection.channel.name}** because you didn't specify a voice channel for joining.`)
+		  joinmsg.push(`You have 10 minutes to decide something while this waiting music plays, otherwise I'll shut down automatically.`)
+          joinmsg.push(`__**Search commands**__`)
+          joinmsg.push(`**${prefix}youtube** - *Search a video on YouTube to use it for request command.*`)
+		  joinmsg.push(`__**Radio commands**__`)
+          joinmsg.push(`**${prefix}listenmoe** - *Play listen.moe on the voice channel.*`)
+		  joinmsg.push(`**${prefix}radio** - *Play a radio file (.m3u or similar) on the voice channel.*`)
+		  joinmsg.push(`**${prefix}radio help** - *Show help instructions to play a station at your voice channel.*`)
+		  joinmsg.push(`__**Music commands**__`)
+          joinmsg.push(`**${prefix}request** - *${bot.User.username} will play a song for you, use a link from YouTube, Soundcloud or a mp3 uploaded file*`)
+          joinmsg.push(`**${prefix}song pause** - *The current song will be paused if it's playing.*`)
+          joinmsg.push(`**${prefix}song play** - *The current song will be resumed if it's paused.*`)
           joinmsg.push(`**${prefix}volume** - *Change the volume of the current song.*`)
-          joinmsg.push(`**${prefix}playlist** - *List upcoming requested songs. Hifumi will show this in order.*`)
+          joinmsg.push(`**${prefix}playlist** - *List upcoming requested songs. ${bot.User.username} will show this in order.*`)
           joinmsg.push(`**${prefix}shuffle** - *Shuffle the music playlist and songs will be played in random order.*`)
           joinmsg.push(`**${prefix}skip** - *Vote to skip the current song if you don't like it.*`)
           joinmsg.push(`**${prefix}forceskip** - *Force skip the current song.*`)
-          joinmsg.push(`**${prefix}shutdown** - *I will no longer play music in the voice channel.*`)
+          joinmsg.push(`**${prefix}shutdown** - *${bot.User.username} will no longer play music in the voice channel.*`)
+		  joinmsg.push(`**NOTE:** If ${bot.User.username}'s music jukebox is bugging too much, try to change your server region.`)
           msg.channel.sendMessage(joinmsg.join('\n'))
           status[msg.guild.id] = true
           time[msg.guild.id] = setTimeout(function () {
             leave(bot, msg)
             status[msg.guild.id] = false
-          }, 660000)
+          }, 600000)
           waiting(vc)
         }).catch((err) => {
           if (err.message === 'Missing permission') {
@@ -90,24 +100,31 @@ exports.join = function (msg, suffix, bot) {
                 if (r !== false) prefix = r
               })
               var joinmsg = []
-              joinmsg.push(`Welcome to music jukebox, now playing in **${vc.voiceConnection.channel.name}**.`)
-              joinmsg.push(`Decide something while this waiting music plays, otherwise I'll shut down automatically.`)
-              joinmsg.push(`__**Music Commands**__`)
-              joinmsg.push(`**${prefix}request** - *I will play a song for you, use a link from YouTube, Soundcloud or a mp3 uploaded file*`)
-              joinmsg.push(`**${prefix}music pause** - *The current song will be paused if it's playing.*`)
-              joinmsg.push(`**${prefix}music play** - *The current song will be resumed if it's paused.*`)
-              joinmsg.push(`**${prefix}volume** - *Change the volume of the current song.*`)
-              joinmsg.push(`**${prefix}playlist** - *List upcoming requested songs. Hifumi will show this in order.*`)
-              joinmsg.push(`**${prefix}shuffle** - *Shuffle the music playlist and songs will be played in random order.*`)
-              joinmsg.push(`**${prefix}skip** - *Vote to skip the current song if you don't like it.*`)
-              joinmsg.push(`**${prefix}forceskip** - *Force skip the current song.*`)
-              joinmsg.push(`**${prefix}shutdown** - *I will no longer play music in the voice channel.*`)
+              joinmsg.push(`Welcome to ${bot.User.username}'s music jukebox, now playing in **${vc.voiceConnection.channel.name}**.`)
+		  joinmsg.push(`You have 10 minutes to decide something while this waiting music plays, otherwise I'll shut down automatically.`)
+          joinmsg.push(`__**Search commands**__`)
+          joinmsg.push(`**${prefix}youtube** - *Search a video on YouTube to use it for request command.*`)
+		  joinmsg.push(`__**Radio commands**__`)
+          joinmsg.push(`**${prefix}listenmoe** - *Play listen.moe on the voice channel.*`)
+		  joinmsg.push(`**${prefix}radio** - *Play a radio file (.m3u or similar) on the voice channel.*`)
+		  joinmsg.push(`**${prefix}radio help** - *Show help instructions to play a station at your voice channel.*`)
+		  joinmsg.push(`__**Music commands**__`)
+          joinmsg.push(`**${prefix}request** - *${bot.User.username} will play a song for you, use a link from YouTube, Soundcloud or a mp3 uploaded file*`)
+          joinmsg.push(`**${prefix}song pause** - *The current song will be paused if it's playing.*`)
+          joinmsg.push(`**${prefix}song play** - *The current song will be resumed if it's paused.*`)
+          joinmsg.push(`**${prefix}volume** - *Change the volume of the current song.*`)
+          joinmsg.push(`**${prefix}playlist** - *List upcoming requested songs. ${bot.User.username} will show this in order.*`)
+          joinmsg.push(`**${prefix}shuffle** - *Shuffle the music playlist and songs will be played in random order.*`)
+          joinmsg.push(`**${prefix}skip** - *Vote to skip the current song if you don't like it.*`)
+          joinmsg.push(`**${prefix}forceskip** - *Force skip the current song.*`)
+          joinmsg.push(`**${prefix}shutdown** - *${bot.User.username} will no longer play music in the voice channel.*`)
+		  joinmsg.push(`**NOTE:** If ${bot.User.username}'s music jukebox is bugging too much, try to change your server region.`)
               msg.channel.sendMessage(joinmsg.join('\n'))
               status[msg.guild.id] = true
               time[msg.guild.id] = setTimeout(function () {
                 leave(bot, msg)
                 status[msg.guild.id] = false
-              }, 660000)
+              }, 600000)
               waiting(vc)
             }).catch((err) => {
               if (err.message === 'Missing permission') {
@@ -117,14 +134,9 @@ exports.join = function (msg, suffix, bot) {
           }
         })
     } else {
-      msg.reply(':warning: I\'m already streaming music on this voice channel :arrow_right: ' + voiceCheck.voiceConnection.channel.name).then((m) => {
-        setTimeout(() => {
-          m.delete().catch((e) => Logger.error(e))
-        }, 10000)
-      })
+      msg.reply(':warning: I\'m already streaming music on this voice channel :arrow_right: ' + voiceCheck.voiceConnection.channel.name)
     }
   }
-}
 
 function leave (bot, msg) {
   if (status[msg.guild.id] === true) {
@@ -151,7 +163,7 @@ exports.leave = function (msg, suffix, bot) {
 function waiting (vc) {
   var waitMusic = vc.voiceConnection.createExternalEncoder({
     type: 'ffmpeg',
-    source: 'placeholder.mp3',
+    source: 'music.mp3' 
     format: 'pcm'
   })
   waitMusic.play()
@@ -184,29 +196,17 @@ function next (msg, suffix, bot) {
         var vol = (list[msg.guild.id].volume !== undefined) ? list[msg.guild.id].volume : 100
         connection.voiceConnection.getEncoder().setVolume(vol)
         encoder.once('end', () => {
-          msg.channel.sendMessage(':musical_score: Track finished: ' + list[msg.guild.id].info[0]).then((m) => {
-            setTimeout(() => {
-              m.delete().catch((e) => Logger.error(e))
-            }, 3000)
-          })
+          msg.channel.sendMessage(':musical_score: Track finished: ' + list[msg.guild.id].info[0])
           list[msg.guild.id].link.shift()
           list[msg.guild.id].info.shift()
           list[msg.guild.id].requester.shift()
           list[msg.guild.id].skips.count = 0
           list[msg.guild.id].skips.users = []
           if (list[msg.guild.id].link.length > 0) {
-            msg.channel.sendMessage(':musical_score: Next up: ' + list[msg.guild.id].info[0] + ', song requested by ' + list[msg.guild.id].requester[0]).then((m) => {
-              setTimeout(() => {
-                m.delete().catch((e) => Logger.error(e))
-              }, 10000)
-            })
+            msg.channel.sendMessage(':musical_score: Next up: ' + list[msg.guild.id].info[0] + ', song requested by ' + list[msg.guild.id].requester[0])
             next(msg, suffix, bot)
           } else {
-            msg.channel.sendMessage(':wave: I didn\'t find something more to play. Music jukebox has been shut down! Bye bye ^-^').then((m) => {
-              setTimeout(() => {
-                m.delete().catch((e) => Logger.error(e))
-              }, 10000)
-            })
+            msg.channel.sendMessage(':wave: I didn\'t find something more to play. Music jukebox has been shut down! Bye bye ^-^')
             connection.voiceConnection.disconnect()
           }
         })
@@ -299,7 +299,7 @@ exports.music = function (msg, suffix, bot) {
         } else if (suffix.toLowerCase() === 'play') {
           connection.voiceConnection.getEncoderStream().uncork()
         } else {
-          msg.channel.sendMessage(':question: I can\'t understand you. Please use: ~music play or ~music pause')
+          msg.channel.sendMessage(':question: I can\'t understand you. Please use: ' + Config.settings.prefix + ' song play or ' + Config.settings.prefix + 'song pause')
         }
       }
     })
@@ -321,7 +321,7 @@ exports.request = function (msg, suffix, bot) {
       return connection.voiceConnection.guild.id === msg.guild.id
     })
   if (connect.length < 1) {
-    msg.channel.sendMessage(":information_source: Please start up Hifumi's music jukebox first to request a song.")
+    msg.channel.sendMessage(":information_source: Please start up " + bot.User.username + "'s music jukebox first to request a song.")
     return
   }
   var link = require('url').parse(suffix)
@@ -329,8 +329,8 @@ exports.request = function (msg, suffix, bot) {
   msg.channel.sendTyping()
   if (suffix.includes('list=') !== suffix.includes('playlist?')) {
     requestLink[msg.guild.id] = suffix
-    if (suffix.includes('youtu.be')) { // If the link is shortened with youtu.be
-      splitLink[msg.guild.id] = requestLink[msg.guild.id].split('?list=') // Check for this instead of &list
+    if (suffix.includes('youtu.be')) {
+      splitLink[msg.guild.id] = requestLink[msg.guild.id].split('?list=')
       msg.channel.sendMessage(`:warning: Try that again with a video or playlist link you want me to play.
 **Video:** <${splitLink[msg.guild.id][0]}>
 **Playlist:** <https://www.youtube.com/playlist?list=${splitLink[msg.guild.id][1]}>`)
@@ -345,7 +345,7 @@ exports.request = function (msg, suffix, bot) {
     var api = require('youtube-api')
     api.authenticate({
       type: 'key',
-      key: Config.api_keys.google
+      key: 'AIzaSyD-Zy5VXroyzHx4HEqTYWs4xXzZjXiBKt0'
     })
     api.playlistItems.list({
       part: 'snippet',
@@ -354,11 +354,7 @@ exports.request = function (msg, suffix, bot) {
       playlistId: query.list
     }, function (err, data) {
       if (err) {
-        msg.channel.sendMessage(':warning: Whoops, something got wrong while proccesing playlist information. Try again later.').then((m) => {
-          setTimeout(() => {
-            m.delete().catch((e) => Logger.error(e))
-          }, 10000)
-        })
+        msg.channel.sendMessage(':warning: Whoops, something got wrong while proccesing playlist information. Try again later.')
         Logger.error('Playlist failure, ' + err)
         return
       } else if (data) {
@@ -368,25 +364,71 @@ exports.request = function (msg, suffix, bot) {
     })
   } else {
     fetch(suffix, msg).then((r) => {
-      msg.channel.sendMessage(`:white_check_mark: Succesfully added: ${r.title}`).then((m) => {
-        setTimeout(() => {
-          m.delete().catch((e) => Logger.error(e))
-        }, 10000)
-      })
+      msg.channel.sendMessage(`:white_check_mark: Succesfully added: ${r.title}`)
       if (r.autoplay === true) {
         next(msg, suffix, bot)
       }
     }).catch((e) => {
       Logger.error(e)
-      msg.channel.sendMessage(":no_entry_sign: Sorry, but I can't access to the song you want to play. You should request songs that are available worldwide.").then((m) => {
-        setTimeout(() => {
-          m.delete().catch((e) => Logger.error(e))
-        }, 10000)
-      })
+      msg.channel.sendMessage(":no_entry_sign: Sorry, but I can't access to the song you want to play. This can happen because the song isn't available worldwide, the song isn't a valid link or something went wrong. Please try again with another song.")
     })
   }
 }
 
+exports.listenmoe = function (msg, suffix, bot) {
+  var connect = bot.VoiceConnections
+    .filter(function (connection) {
+      return connection.voiceConnection.guild.id === msg.guild.id
+    })
+  if (connect.length < 1) {
+    msg.channel.sendMessage(":information_source: Please start up " + bot.User.username + "'s music jukebox first to hear Listen.moe radio.")
+    return
+  }
+  var link = require('url').parse('http://listen.moe:9999/stream.m3u')
+  var query = require('querystring').parse(link.query)
+  msg.channel.sendTyping()
+    fetch('http://listen.moe:9999/stream.m3u', msg).then((r) => {
+      msg.channel.sendMessage(`:white_check_mark: Now playing Listen.moe!
+If you want to request a song to be played, register/login into Listen.moe website and go here: https://listen.moe/#/songs
+Use ${Config.settings.prefix}shutdown to finish the broadcast anytime.
+Please keep in mind that broadcast can finish without advice if something goes wrong.`)
+      if (r.autoplay === true) {
+        next(msg, suffix, bot)
+      }
+    }).catch((e) => {
+      Logger.error(e)
+      msg.channel.sendMessage(":no_entry_sign: Sorry, but something went wrong while playing this station. Try again later!")
+    })
+  }
+
+exports.playradio = function (msg, suffix, bot) {
+  var connect = bot.VoiceConnections
+    .filter(function (connection) {
+      return connection.voiceConnection.guild.id === msg.guild.id
+    })
+  if (connect.length < 1) {
+    msg.channel.sendMessage(":information_source: Please start up " + bot.User.username + "'s music jukebox first to play a radio station.")
+    return
+  }
+  var link = require('url').parse(suffix)
+  var query = require('querystring').parse(link.query)
+  msg.channel.sendTyping()
+  if (suffix.includes('youtube.com') || suffix.includes('youtu.be') || suffix.includes('soundcloud.com') || suffix.includes('snd.sc') || suffix.includes('google.com')) {
+   msg.channel.sendMessage('This command is only for radio playing. Use ``' + Config.settings.prefix + 'request`` to play a song instead.')
+  } else {
+    fetch(suffix, msg).then((r) => {
+      msg.channel.sendMessage(`:white_check_mark: Now playing!
+Use ${Config.settings.prefix}shutdown to finish the broadcast anytime or wait until the radio finish its broadcasting.`)
+      if (r.autoplay === true) {
+        next(msg, suffix, bot)
+      }
+    }).catch((e) => {
+      Logger.error(e)
+      msg.channel.sendMessage(":no_entry_sign: Sorry, but this is not a radio stream (RAW) file or something went wrong. To know how to use this command, use ``" + Config.settings.prefix + "radio help``")
+    })
+  }
+}
+  
 exports.leaveRequired = function (bot, guild) {
   var connect = bot.VoiceConnections
     .find(function (connection) {
@@ -409,7 +451,7 @@ function fetch (v, msg, stats) {
     }
     var options
     if (v.indexOf('youtu') > -1) {
-      options = ['--skip-download', '--add-header', 'Authorization:' + Config.api_keys.google]
+      options = ['--skip-download', '--add-header', 'Authorization: AIzaSyD-Zy5VXroyzHx4HEqTYWs4xXzZjXiBKt0']
     } else {
       options = ['--skip-download']
     }

@@ -1,22 +1,21 @@
 {
   "bot": {
     "isbot": true,
-    "token": "here you need to paste the bot token here",
-    "email": "optional, here you can write your discord email in case the token is broken",
-    "password": "optional, here you can write your discord password in case the token is broken",
-    "oauth": "here you need to paste your bot invite, optional too",
-	"senpai": "your name or aka here"
+    "token": "the bot token",
+    "email": "if the token brokes, put your discord email here, optional",
+    "password": "if the token brokes, put your discord pass here, optional"
   },
   "settings": {
-    "prefix": "the prefix you want to set for the bot",
-	"musiclimit": "until what number of voice channels can your bot connect?"
+    "prefix": "the bot prefix"
   },
   "permissions": {
-    "master": ["your discord id, you can also paste more discord ids to make the users bot owners", "to paste more than 1 id use ("userid1", "userid2")"],
-    "level1": ["optional, discord ids (users) listed here will be always in this level for every server"],
-    "level2": ["optional, same as above"],
-    "level3": ["optional, same as abovest"]
+    "master": ["the discord id of the bot owners, if you want more than 1 owner separate it with a comma"],
+    "level1": [],
+    "level2": [],
+    "level3": []
   },
-    "google": "AIzaSyD-Zy5VXroyzHx4HEqTYWs4xXzZjXiBKt0",
-    "mashape": "85yfRQzvsFmshNn6HxjhhOuHvqytp1JKEeqjsnug11WERv50Mr"
+  "guildpost": {
+    "abal": "abal's db key if needed",
+    "carbon": "same as above but carbon"
   }
+}

@@ -9,13 +9,9 @@ var db = new Database({
 Commands.tag = {
   name: 'tag',
   level: 0,
-  usage: '<create/delete> <tagname> [content] OR <tagname>',
-  aliases: ['t'],
   fn: function (msg, suffix, bot) {
     var index = suffix.split(' ')
-  if (!suffix) {
-              msg.reply(':no_entry_sign: You can\'t create a tag without no content.')
-  } else if (suffix) {
+if (suffix) {
       if (index[0].toLowerCase() === 'create') {
         if (Config.permissions.master.indexOf(msg.author.id) === -1) {
           var re = /(discord(\.gg|app\.com\/invite)\/([\w]{16}|([\w]+-?){3}))/

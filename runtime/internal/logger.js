@@ -2,8 +2,6 @@
 var Winston = require('winston')
 var path = require('path')
 
-// Chat Logger
-
 Winston.emitErrs = true
 
 exports.ChatLog = new Winston.Logger({
@@ -27,8 +25,6 @@ exports.DebugLog = new Winston.Logger({
     })
   ]
 })
-
-// Command Error Logger
 
 exports.Logger = new Winston.Logger({
   colors: {

@@ -205,6 +205,6 @@ function user () {
 
 exports.incomInit = function () {
   return new Promise(function (resolve) {
-    return resolve('lol no upgrade for you <3')
+    return resolve('No upgrades found! You can now quit this function.')
   })
 }

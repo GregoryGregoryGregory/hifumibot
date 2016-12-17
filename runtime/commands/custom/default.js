@@ -6,22 +6,6 @@ var argv = require('minimist')(process.argv.slice(2))
 
 //English -START-
 
-Commands.senpaihelp = {
-  name: 'senpaihelp',
-  module: 'default',
-  level: 'master',
-fn: function (msg, suffix) { 
-  msg.channel.sendMessage(`Owner-only commands
-  
-  ${config.settings.prefix}eval - evaluate arbitrary Javascript Javascript/Discordie code with results
-  ${config.settings.prefix}plaineval - same as eval command, but it's a plained evaluation
-  ${config.settings.prefix}setstatus online game - set status  of the bot as online playing a game
-  ${config.settings.prefix}setstatus idle game - set status of the bot as idle playing a game
-  ${config.settings.prefix}setstatus twitchurl game - set status of the bot as streaming playing a game
-  ${config.settings.prefix}sleep - shutdown the bot`)
-}
-}
-
 Commands.ping = {
   name: 'ping',
   module: 'default',
@@ -41,24 +25,32 @@ Commands.say = {
   timeout: 10,
   level: 0,
   fn: function (msg, suffix) {
-	  
     var re = /(discord(\.gg|app\.com\/invite)\/([\w]{16}|([\w]+-?){3}))/
     if (msg.mentions.length >= 1) {
-      msg.reply('I won\'t say mentions, thanks!')
+      msg.channel.sendMessage('I won\'t say mentions, thanks!')
     } else if (re.test(msg.content)) {
-      msg.reply('Sorry, but I won\'t say that. Thanks! :ok_hand:')
+      msg.channel.sendMessage('Sorry, but I won\'t say that. Thanks! :ok_hand:')
     } else {
-          msg.delete()
-      msg.reply('\u200B' + suffix.replace(/@everyone/, 'Nice try').replace(/@here/, 'Nice try'))
+      msg.channel.sendMessage('\u200B' + suffix.replace(/@everyone/, '@every\u200Bone').replace(/@here/, '@he\u200Bre'))
 	}
     }
   }
+  
+Commands.echo = {
+  name: 'echo',
+  module: 'master',
+  timeout: 10,
+  level: 0,
+  fn: function (msg, suffix) {
+          msg.delete()
+      msg.channel.sendMessage(suffix)
+	}
+    }
 
 Commands.clean = {
   name: 'clean',
-  usage: '<number>',
   noDM: true,
-  timeout: 30,
+  timeout: 10,
   level: 3,
   fn: function (msg, suffix, bot) {
     var guild = msg.guild
@@ -106,7 +98,7 @@ Commands.eval = {
         str = str + '...'
       }
       str = str.replace(new RegExp(bot.token, 'gi'), 'Why do you want to know that?')
-      msg.channel.sendMessage('```xl\n' + str + '\n```').then((ms) => {
+      msg.channel.sendMessage(':white_check_mark: **Evaluation success!**\n\nOutput:\n```xl\n' + str + '\n```').then((ms) => {
         if (returned !== undefined && returned !== null && typeof returned.then === 'function') {
           returned.then(() => {
             var str = util.inspect(returned, {
@@ -130,7 +122,7 @@ Commands.eval = {
         }
       })
     } catch (e) {
-      msg.channel.sendMessage('```xl\n' + e + '\n```')
+      msg.channel.sendMessage(':no_entry_sign: **Evaluation failed!**\n\nOutput:\n```xl\n' + e + '\n```')
     }
   }
 }
@@ -142,11 +134,15 @@ Commands.plaineval = {
     if (msg.author.id === bot.User.id) return
     var evalfin = []
     try {
+	  evalfin.push(':white_check_mark: **Evaluation success!**\n\n')
+	  evalfin.push('Output:')
       evalfin.push('```xl')
       evalfin.push(eval(suffix))
       evalfin.push('```')
     } catch (e) {
       evalfin = []
+	  evalfin.push(':no_entry_sign: **Evaluation failed!**\n\n')
+	  evalfin.push('Output:')
       evalfin.push('```xl')
       evalfin.push(e)
       evalfin.push('```')
@@ -166,6 +162,16 @@ Commands.sleep = {
   }
 }
 
+Commands.restart = {
+  name: 'restart',
+  level: 'master',
+  fn: function (msg, suffix, bot) {
+	msg.channel.sendMessage('Restarting ' + bot.User.username + '...')
+	Logger.warn('Restarting...')
+    bot.disconnect()
+    bot.connect()
+  }
+}
 
 Commands.setlevel = {
   name: 'setlevel',
@@ -176,9 +182,9 @@ Commands.setlevel = {
     var Permissions = require('../../databases/controllers/permissions.js')
     suffix = suffix.split(' ')
     if (isNaN(suffix[0])) {
-      msg.reply(':warning: Please use the following order to set levels: ' + config.settings.prefix + 'setlevel (number) @userorroletosetlevel')
+      msg.reply(':warning: Please use the following order to set levels: ' + config.settings.prefix + 'setlevel (number) @userorroletosetlevel.\n-1 for ignored users, 0 for normal users, 1-2 for users with music administration permissions and 3 for users with overall moderation permissions.')
     } else if (suffix[0] > 3) {
-      msg.channel.sendMessage(':x: Setting a level higher than 3 is not allowed.')
+      msg.channel.sendMessage(':no_entry_sign: Setting a level higher than 3 is not allowed.')
     } else if (msg.mentions.length === 0 && msg.mention_roles.length === 0) {
       msg.reply(':warning: Please @mention the user(s)/role(s) you want to set the permission level of.')
     } else if (msg.mentions.length === 1 && msg.mentions[0].id === bot.User.id) {
@@ -187,7 +193,7 @@ Commands.setlevel = {
       Permissions.adjustLevel(msg, msg.mentions, parseFloat(suffix[0]), msg.mention_roles).then(function () {
         msg.channel.sendMessage(':white_check_mark: Done!')
       }).catch(function (err) {
-        msg.channel.sendMessage(':x: Something went wrong!')
+        msg.channel.sendMessage(':no_entry_sign: Something went wrong!')
         Logger.error(err)
       })
     }
@@ -198,7 +204,6 @@ Commands.setnsfw = {
   name: 'setnsfw',
   noDM: true,
   module: 'default',
-  usage: '<on | off>',
   level: 3,
   fn: function (msg, suffix) {
     var Permissions = require('../../databases/controllers/permissions.js')
@@ -222,37 +227,38 @@ Commands.setnsfw = {
   }
 }
 
-Commands.about = {
-  name: 'about',
-  timeout: 20,
+Commands.stats = {
+  name: 'stats',
+  timeout: 10,
   level: 0,
   fn: function (msg, suffix, bot) {
   msg.channel.sendMessage ('Hello, ' + msg.author.username + '. ' + `I am ${bot.User.username}, nice to meet you.
 
 **Stats**
-${config.settings.prefix} is my prefix (server prefix is ${prefix})
 ${bot.Guilds.length} servers
 ${bot.Channels.length} channels
 ${bot.Users.length} users
 ${bot.VoiceConnections.length} voice channels
 ${bot.DirectMessageChannels.length} DM chats
 ${bot.Messages.length} messages
-Bot is sharded? ${(argv.shardmode ? 'Yes, this is shard ' + argv.shardid + ', and ' + argv.shardcount + ' shards are propagated.' : 'No')}
-
-**Info**
-I'm developed and created by ${config.bot.senpai}
-This bot is forked from Hifumi, a multifunctional Discord bot. http://hifumibot.tumblr.com
+Sharding - ${(argv.shardmode ? 'Shard ' + argv.shardid + ', currently propagating ' + argv.shardcount + ' shards.' : 'Disabled')}
 `)
   }
 }
 
-
+Commands.invite = {
+  name: 'invite',
+  timeout: 10,
+  level: 0,
+  fn: function (msg, suffix, bot) {
+  msg.channel.sendMessage ('Use this link to invite me to your server:\n**NOTE: Select all permissions as needed but it\'s recommendable to keep enabled all, so I can work fine.**\nOverall permissions: <https://discordapp.com/oauth2/authorize?client_id=' + bot.User.id + '&scope=bot&permissions=2146958463>\nNo permissions/role: <https://discordapp.com/oauth2/authorize?client_id=' + bot.User.id + '&scope=bot&permissions=0>')
+  }
+}
 
 Commands.kick = {
   name: 'kick',
   noDM: true,
   module: 'default',
-  usage: '<user-mention>',
   level: 3,
   fn: function (msg, suffix, bot) {
     var guild = msg.guild
@@ -267,6 +273,10 @@ Commands.kick = {
     } else if (msg.mentions.length === 0) {
       msg.channel.sendMessage(':warning: Please mention who you want to kick.')
       return
+    } else if (msg.mentions.length === 1 && msg.mentions[0].id === bot.User.id) {
+	  msg.channel.sendMessage(':information_source: If I don\'t really like you, using the command ``' + config.settings.prefix + 'leave`` would be more accurate.')	
+    } else if (msg.mentions.length === 1 && msg.mentions[0].id === msg.author.id) {
+	  msg.channel.sendMessage(':no_entry_sign: You can\'t kick yourself.')	
     } else {
       msg.mentions.map(function (user) {
         var member = msg.guild.members.find((m) => m.id === user.id)
@@ -305,7 +315,6 @@ Commands.ban = {
   name: 'ban',
   noDM: true,
   module: 'default',
-  usage: '<user-mention> [days]',
   level: 3,
   fn: function (msg, suffix, bot) {
     var guild = msg.guild
@@ -314,11 +323,15 @@ Commands.ban = {
     var guildPerms = user.permissionsFor(guild)
     var botPerms = botuser.permissionsFor(guild)
     if (!guildPerms.General.BAN_MEMBERS) {
-      msg.reply(':no_entry_sign: Sorry, but you need Ban Memebers permission first.')
+      msg.reply(':no_entry_sign: Sorry, but you need Ban Members permission first.')
     } else if (!botPerms.General.BAN_MEMBERS) {
       msg.channel.sendMessage(':no_entry_sign: I need Ban Members permission, sorry!')
     } else if (msg.mentions.length === 0) {
       msg.channel.sendMessage(':warning: Please mention who you want to ban.')
+	} else if (msg.mentions.length === 1 && msg.mentions[0].id === bot.User.id) {
+	  msg.channel.sendMessage(':information_source: If I don\'t really like you, using the command ``' + config.settings.prefix + 'leave`` would be more accurate.')	
+    } else if (msg.mentions.length === 1 && msg.mentions[0].id === msg.author.id) {
+	  msg.channel.sendMessage(':no_entry_sign: You can\'t ban yourself.')	
     } else {
       var days = suffix.split(' ')[msg.mentions.length] || 0
       if ([0, 1, 7].indexOf(parseFloat(days)) > -1) {
@@ -354,6 +367,24 @@ Commands.nicknames = {
       })
     })
   }
+}
+
+Commands.leave = {
+  name: 'leave',
+  noDM: true,
+  level: 3,
+  fn: function (msg, suffix) {
+    if (msg.isPrivate) {
+      msg.channel.sendMessage(':joy: What? Kick me from my own DM chat? That\'s funny!')
+    } else if (suffix === msg.guild.name) {
+      msg.channel.sendMessage(':wave: OK, bye bye!')
+      msg.guild.leave()
+    } else if (!suffix) {
+		msg.channel.sendMessage(':warning: **Are you really sure you want to kick ' + bot.User.username + ' from this server?**\nAll server bot data, as well as configuration may be lost after this action.\n\nTo confirm, type the following text: ``' + config.settings.prefix + 'leave ' + msg.guild.name + '``\nTo cancel, ignore this message.')
+    } else {
+		msg.channel.sendMessage(':no_entry_sign: Invalid response, if you want me out of here, use ``' + config.settings.prefix + 'leave ' + msg.guild.name + '``\nTo cancel, ignore this message.')
+    } 
+}
 }
 
   //English -FINISH-
