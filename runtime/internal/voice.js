@@ -163,7 +163,7 @@ exports.leave = function (msg, suffix, bot) {
 function waiting (vc) {
   var waitMusic = vc.voiceConnection.createExternalEncoder({
     type: 'ffmpeg',
-    source: 'music.mp3' 
+    source: 'music.mp3',
     format: 'pcm'
   })
   waitMusic.play()
