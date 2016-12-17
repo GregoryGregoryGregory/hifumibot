@@ -2,8 +2,8 @@
 <a href="http://hifumibot.tumblr.com/"><img src="http://puu.sh/sn7Z9.jpg"></a></p>
 
 <p align="center">
-<a href="http://nodejs.org"><img src="https://img.shields.io/badge/Node.js-6.6.0-blue.svg" alt="Node JS"></a>
-<a href="http://npmjs.com"><img src="https://img.shields.io/badge/npm-3.10.3-blue.svg" alt="npm"></a>
+<a href="http://nodejs.org"><img src="https://img.shields.io/badge/Node.js-7,2.1-blue.svg" alt="Node JS"></a>
+<a href="http://npmjs.com"><img src="https://img.shields.io/badge/npm-3.10.10-blue.svg" alt="npm"></a>
 <a><img src="https://img.shields.io/badge/Version-1.5.2-blue.svg" alt="Version"></a>
 <a href="http://discord.gg/FtDbNrd"><img src="https://discordapp.com/api/guilds/227899389744513026/widget.png" alt="Discord server"></a>
 </p>
