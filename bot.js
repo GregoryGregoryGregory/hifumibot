@@ -282,7 +282,7 @@ bot.Dispatcher.on(Event.DISCONNECTED, function (e) {
 
 function setGame() {
 bot.User.setStatus('online', {
-name: `{config.settings.prefix}help | ${bot.Guilds.length} servers`
+name: `${config.settings.prefix}help | ${bot.Guilds.length} servers`
         })
 }
 		
