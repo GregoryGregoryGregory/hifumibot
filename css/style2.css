@@ -1,0 +1,193 @@
+body {
+  font-family: "Courier New", arial;
+  font-size: 16px;
+  background: #000;
+  color: #fff;
+  margin: 0;
+  overflow-x: hidden;
+}
+a {
+  color: orange;
+}
+h1 {
+  display: table;
+  height: 100px;
+  width: 100%;
+  color: orange;
+  margin: 0;
+  background: #111;
+  font-weight: normal;
+  font-size: 52px;
+  box-shadow: 0px 4px 12px #111;
+}
+h1 p{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+.online {
+  color: #090;
+}
+.offline {
+  color: #f00;
+}
+
+.wrapper {
+  width: 80%;
+  margin: auto;
+  max-width: 1200px;
+  margin-top: 30px;
+  position: relative;
+  min-height: 300px;
+}
+
+.window {
+  background: #000;
+  position:absolute;
+  border: 1px solid #fff;
+  z-index: 2;
+  width: 100%;
+}
+
+.title {
+  color: #999;
+  background: #eee;
+  padding: 0 5px;
+}
+
+.title img {
+  vertical-align: middle;
+}
+
+.prompt {
+  display: inline-block;
+  padding-top: 5px;
+}
+
+.buttons {
+  float: right;
+  display: inline-block;
+}
+
+.buttons .x, .buttons .x:visited {
+  font-size: 30px;
+  vertical-align: sub;
+  color: #999;
+  text-decoration:none;
+}
+
+.buttons .max, .buttons .max:visited {
+  text-decoration: none;
+  color: #999;
+}
+
+.buttons .min, .buttons .min:visited {
+  text-decoration: none;
+  color: #999;
+}
+
+.clear {
+  clear:both;
+}
+
+.main {
+  overflow-y: scroll;
+  padding: 0 5px;
+}
+
+.close {
+  position: absolute;
+  z-index:1;
+  top: 20%;
+  left:0;
+  display: none;
+}
+
+ul {
+  padding :0;
+  padding-top: 0;
+  list-style: none;
+  margin-top: 0;
+}
+
+li.q {
+  border-bottom: 1px dotted #fff;
+  display: inline-block;
+  color: #3f2;
+  margin-top: 10px;
+}
+
+li:not(.q) {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+
+.input {
+  position: relative;
+}
+
+input {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  position: absolute;
+  z-index: 2;
+  font-family: "courier new";
+  left: 20px;
+  width: 90%;
+}
+
+.input .blink {
+  position: absolute;
+  z-index: 1;
+  left: 20px;
+  background: #ccc;
+  display: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+.minwin {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  color: #999;
+  background: #eee;
+  padding: 0 15px;
+  height: 25px;
+  padding-top: 10px;
+  cursor: pointer;
+  display: none;
+}
+
+/* heh heh heh blink tag cannot escape */
+@keyframes blinky {  
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@-moz-keyframes blinky {  
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@-webkit-keyframes blinky {  
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+.blink {
+    animation-name: blinky;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: blinky;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-name: blinky;
+    -moz-animation-duration: 1s;
+    -moz-animation-iteration-count: infinite;
+}
