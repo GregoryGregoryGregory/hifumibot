@@ -22,13 +22,17 @@
   function init() {
     cmd.focus();
 
-    var q_what = 'UB3R-B0T was created by moiph in 2005 using mirc scripts. Then in like college or something my friend Jerry was all like "i have a php irc bot" and i was like "sweet dude" so then we reworked that code to make an irc bot framework (hotnsour) and then UB3R-B0T used that to become UB2R-B0T. Then, in 2012, UB2R-B0T was killed off in favor of version 3, UB3R-B0T, which was rebuilt in C#. Then in 2015 UB3R-B0T continued to be UB3R-B0T but added Discord support.';
+    var q_hifumi-a = 'Hello, my name is Hifumi and I\'m a multifunctional + music bot that will give you fun and is very easy to use.';
+    var q_hifumi-b = 'To get started, select your favorite command category by typing a number and know more.';
+    var q_hifumi-c = 'PLEASE NOTE! More features are coming soon, any suggestion is really appreciated :D';
+    var q_hifumi-d = 'Do you think you like this bot? Invite it to your server here: https://discordapp.com/oauth2/authorize?client_id=227171028072267778&scope=bot&permissions=2146958463';
+    var q_hifumi-e = 'In case of problems, suggestions or want to see bot progress join to our support server: https://discord.gg/FtDbNrd';
 
-   // var q_do = "Many things.  Here's just a boring list of some of the commands with no extra documentation (yet): .8ball, .b, .chuck_norris, .expand, .fw, .stock, .help, .isup, .lastfm, .metal, .note, .poe, .seen, .shorten, .steam, .sw, .title, .twitter, .ud, .ups, .weather, .wolfram";
-    var q_do = 'Many things. Reminders, searches, package tracking, weather, RSS/Twitter/Twitch notifications, and so on.';
-
-    consoletype(q_what, document.getElementById('q_what'));
-    consoletype(q_do, document.getElementById('q_do'));
+    consoletype(q_hifumi-a, document.getElementById('q_hifumi-a'));
+    consoletype(q_hifumi-b, document.getElementById('q_hifumi-b'));
+    consoletype(q_hifumi-c, document.getElementById('q_hifumi-c'));
+    consoletype(q_hifumi-d, document.getElementById('q_hifumi-d'));
+    consoletype(q_hifumi-e, document.getElementById('q_hifumi-e'));
   }
 
   function close(ev) {
@@ -74,17 +78,86 @@
 
       if (cmdval == 'cls') {
         document.getElementById('text').innerHTML = '';
-      } else if (cmdval == "8ball" || cmdval == ".8ball") {
-        cmdDetails.innerHTML = ".8ball yes or no question? | Receive an answer";
-      } else if (cmdval == "dir") {
-        var time = new Date().toLocaleString();
-        cmdDetails.innerHTML = "&nbsp;Directory of U:\UB3R-B0T<br/><br/>" + 
-            time + " &lt;DIR&gt; .<br/>" + 
-            time + " &lt;DIR&gt; ..<br/>" +
-            "0 File(s) 0 bytes<br/>" +
-            "2 Dir(s)  9,351,5361,351,515 bytes free";
+      } else if (cmdval == "1" || cmdval == "~help 1") {
+        cmdDetails.innerHTML = "Fun/Misc.<br /><br />" +
+"~8ball - ask a question to the magic 8 ball.<br />" +
+"~chocolate - Gift a chocolate to someone.<br />" +
+"~chocolate eat - Eat an already gifted chocolate.<br />" +
+"~choose - choose the best option between 2 options or more, separate options with a ','<br />" +
+"~coinflip - flip a coin and get a result.<br />" +
+"~dice - roll a dice, you can use '1dnumber' as suffix to modify dice sides (replace number with a number)<br />" +
+"~garfield - get a Garfield comic from any date of 1978-today.<br />" +
+"~gif - search for a GIF on Giphy.<br />" +
+"~hifumi - display a random GIF from Hifumi on NEW GAME! anime.<br />" +
+"~leetspeak - c0nv3r7 `/0ur 73x7 1ik3 7hi5.<br />" +
+"~rate - rate a user or character.<br />" +
+"~rip - create a ripme.xyz link with the user you mention.<br />" +
+"~roll - get a random number from 1 to 100.<br />" +
+"~rps - play rock, paper and scissors with Hifumi.<br />" +
+"~slap - slap someone.<br />" +
+"~say - make the bot repeat something, mentions and invites are not allowed.<br />" +
+"~talk - talk with Hifumi and have a conversation (powered by Cleverbot)<br />" +
+"~triggered - react with a Triggered meme.";
+      } else if (cmdval == "2" || cmdval == "~help 2") {
+        cmdDetails.innerHTML = "Utilities<br /><br />" +
+"~advice - get a random advice for something random.<br />" +
+"~fact - get a fact for something interesting.<br />" +
+"~catfacts - get a curious cat fact.<br />" +
+"~google - let Hifumi google that for you!<br />" +
+"~nicknames - use this with a user to know his/her previous nicknames.<br />" +
+"~server-info - get some information about the server you are in.<br />" +
+"~twitch - search for a Twitch channel and know if he/she is streaming or not.<br />" +
+"~userinfo - get some information about a server member.<br />" +
+"~urban - search for a word on Urban Dictionary database.<br />" +
+"~weather - search the weather for a city.<br />" +
+"~yesno - get a random GIF saying if 'yes' or 'no' to your question.";
+      } else if (cmdval == "3" || cmdval == "~help 3") { 
+       cmdDetails.innerHTML = "Moderation<br /><br />" +
+"~ban - apply the ban hammer to someone.<br />" +
+"~clean - clean from 1 to 100 messages.<br />" +
+"~customize - main command to modify bot replies, welcome system and prefix. Use ~customize help on Discord chat to know more.<br />" +
+"~kick - kick someone, keep in mind that he/she can re-join.<br />" +
+"~setlevel - use it with a number and a user to level up her/him!<br />" +
+"~setnsfw - toggle the NSFW commands on the channel.";
+      } else if (cmdval == "4" || cmdval == "~help 4") { 
+       cmdDetails.innerHTML = "Music<br /><br />" +
+"~music - Hifumi will play music in the voice channel. You can specify one or not.<br />" +
+"~request - Hifumi will play a song for you, use a link from YouTube, Soundcloud or a mp3 uploaded file<br />" +
+"~listenmoe - Hifumi will play listen.moe radio station.<br />" +
+"~radio - Hifumi will play a radio stream file for you. Use ~radio help in Discord chat to know how to get stream link of your favorite station.<br />" +
+"~youtube - search something in YouTube.<br />" +
+"~song pause - The current song will be paused if it's playing.<br />" +
+"~song play - The current song will be resumed if it's paused.<br />" +
+"~volume - Change the volume of the current song.<br />" +
+"~playlist - List upcoming requested songs. Hifumi will show this in order.<br />" +
+"~shuffle - Shuffle the music playlist and songs will be played in random order.<br />" +
+"~skip - Vote to skip the current song if you don't like it.<br />" +
+"~forceskip - Force skip the current song.<br />" +
+"~shutdown - Hifumi will no longer play music in the voice channel.";      
+      } else if (cmdval == "5" || cmdval == "~help 5") { 
+       cmdDetails.innerHTML = "Tags<br /><br />" +
+"~tag create - create a new tag (order: command tag content)<br />" +
+"~tag delete - delete an existing tag (order: command tag)<br />" +
+"~tag edit - edit an existing tag (order: command tag new content)<br />" +
+"~tag owner - display the owner for an existing tag (order: command tag)";
+      } else if (cmdval == "6" || cmdval == "~help 6") { 
+       cmdDetails.innerHTML = "NSFW<br /><br />" +
+"~e621 - search for furry porn on e621.<br />" +
+"~rule34 - if it exists, there's porn of it.<br />" +
+"~konachan - search for hentai on Konachan.<br />" +
+"~greenteaneko - show a random bizarre GreenTeaNeko comic.";
+      } else if (cmdval == "7" || cmdval == "~help 7") { 
+       cmdDetails.innerHTML = "Bot information<br /><br />" +
+"~about - display the bot information, including useful links.<br />" +
+"~stats - display the bot stadistics.<br />" +
+"~help - display the command help menu.<br />" +
+"~ping - respond with pong plus response delay on ms, useful to test the bot functioning.<br />" +
+"~invite - display the bot OAuth invite link.<br />" +
+"~leave - I'll leave the server.";
+      } else if (cmdval == "help" || cmdval == "~help") {
+        cmdDetails.innerText = cmdDetails.textContent = "I already sent my command help and also this is the command page! Baka! >.<";
       } else {
-        cmdDetails.innerText = cmdDetails.textContent = "'" + cmdval + "' is not recognized as an internal or external command, operable program or batch file.";
+         cmdDetails.innerText = cmdDetails.textContent = "'" + cmdval + "' is not recognized as an internal or external command, operable program or batch file.";
       }
 
       cmd.value = '';
