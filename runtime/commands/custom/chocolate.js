@@ -1,6 +1,6 @@
 var Commands = []
 var Database = require('nedb')
-var Config = require('../../../config.json')
+var config = require('../../../config.json')
 var db = new Database({
   filename: './runtime/databases/chocolates',
   autoload: true
