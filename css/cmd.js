@@ -25,8 +25,8 @@
     var q_hifumi1 = 'Hello, my name is Hifumi and I\'m a multifunctional + music bot that will give you fun and is very easy to use.';
     var q_hifumi2 = 'To get started, select your favorite command category by typing a number and know more.';
     var q_hifumi3 = 'PLEASE NOTE! More features are coming soon, any suggestion is really appreciated :D';
-    var q_hifumi4 = 'Do you think you like this bot? Invite it to your server here: https://discordapp.com/oauth2/authorize?client_id=227171028072267778&scope=bot&permissions=2146958463';
-    var q_hifumi5 = 'In case of problems, suggestions or want to see bot progress join to our support server: https://discord.gg/FtDbNrd';
+    var q_hifumi4 = 'Do you think you like this bot? Invite it to your server here: <a>https://discordapp.com/oauth2/authorize?client_id=227171028072267778&scope=bot&permissions=2146958463</a>';
+    var q_hifumi5 = 'In case of problems, suggestions or want to see bot progress join to our support server: <a>https://discord.gg/FtDbNrd</a>';
 
     consoletype(q_hifumi1, document.getElementById('q_hifumi1'));
     consoletype(q_hifumi2, document.getElementById('q_hifumi2'));
