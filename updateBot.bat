@@ -30,7 +30,7 @@ GOTO end
 
 :64bit
 echo %OS% with 64 bits detected (x64)
-echo Download the update for you! :D
+echo Downloading the update for you! :D
 echo Please don't close this window or disconnect from the network.
 echo Stay here to know when the download finishes and follow the instructions.
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://github.com/Underforest/hifumibot/archive/master.zip', 'master.zip')"
