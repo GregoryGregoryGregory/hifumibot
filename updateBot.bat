@@ -19,7 +19,7 @@ echo --------------------------------------------------------
 echo INSTRUCTIONS
 echo Once the download is finished, do the following!
 echo 1. Open master.zip
-echo 2. Extract the "" folder content (Replace all
+echo 2. Extract the "hifumibot-master" folder content (Replace all
 echo files with new one, it shouldn't affect the bot)
 echo 3. Start the bot and enjoy!
 echo --------------------------------------------------------
@@ -40,7 +40,7 @@ echo INSTRUCTIONS
 echo Once the download is finished, do the following!
 echo 1. Verify that there's a "master.zip" file on your
 echo workplace. If so, open master.zip
-echo 2. Extract the "" folder content (Replace all
+echo 2. Extract the "hifumibot-master" folder content (Replace all
 echo files with new one, it shouldn't affect the bot)
 echo 3. Start the bot and enjoy!
 echo --------------------------------------------------------
