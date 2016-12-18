@@ -1,11 +1,98 @@
-<script language="JavaScript" type="text/javascript">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Hifumi - the Discord bot</title>
+    <link rel="stylesheet" href="css/style2.css" />
 
-var page="coming-soon.html"
-function redireccionar() 
-{
-location.href=page
-} 
-setTimeout ("redireccionar()", 0);
-
+    <!--[if lt IE 9]>
+	    <script src="js/html5shiv.js"></script>
+	    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+<link rel="apple-touch-icon" sizes="57x57" href="/images/ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/images/ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/images/ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/images/ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/images/ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/images/ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/images/ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/images/ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+</head><!--/head-->
+<body>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-76800183-1', 'auto');
+  ga('send', 'pageview');
 </script>
-                      
+<h1>Hifumi commands</h1>
+
+<div class="wrapper">
+
+<div class="window" id="window">
+
+<div class="title">
+<span class="prompt"><img src="cmd.png" /> C:\WINDOWS\system32\cmd.exe</span>
+<span class="buttons"><a class="min" id="min" href="#">&#8210;</a> &nbsp; <a class="max" id="max" href="#">&#9744;</a> &nbsp; <a class="x" href="#" id="x">&#215;</a></span>
+<div class="clear"></div>
+</div>
+
+<div class="main">
+<div class="text" id="text">
+<span>~Hifumi v1.5.2~</span><br/>
+<span>A Discord bot</span><br/>
+<span>(c) 2016 Underforest - Chino.</span>
+<ul>
+
+<li id="q_hifumi-a"></li>
+<li id="q_hifumi-b"></li>
+<li class="q">Hifumi commands</li>
+<li class="q">1. Fun/Misc</li>
+<li class="q">2. Utilities</li>
+<li class="q">3. Moderation</li>
+<li class="q">4. Music</li>
+<li class="q">5. Tags</li>
+<li class="q">6. NSFW</li>
+<li class="q">7. Bot info.</li>
+<li id="q_hifumi-c"></li>
+<li id="q_hifumi-d"></li>
+<li id="q_hifumi-e"></li>
+</ul>
+</div>
+<div class="prompt">
+<br/>
+<div class="input">
+&gt; <input type="text" id="cmd" />
+<span class="blink" id="blink">_</span>
+</div>
+<span id="cmdDetails"></span>
+
+</div>
+</div>
+</div>
+<div class="close" id="close">
+Baka!
+</div>
+</div>
+<div class="minwin" id="minwin">cmd.exe</div>
+
+<script type="text/javascript" src="css/cmd.js"></script>
+
+
+</body>
+</html>
+
