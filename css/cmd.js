@@ -22,17 +22,17 @@
   function init() {
     cmd.focus();
 
-    var q_hifumi-a = 'Hello, my name is Hifumi and I\'m a multifunctional + music bot that will give you fun and is very easy to use.';
-    var q_hifumi-b = 'To get started, select your favorite command category by typing a number and know more.';
-    var q_hifumi-c = 'PLEASE NOTE! More features are coming soon, any suggestion is really appreciated :D';
-    var q_hifumi-d = 'Do you think you like this bot? Invite it to your server here: https://discordapp.com/oauth2/authorize?client_id=227171028072267778&scope=bot&permissions=2146958463';
-    var q_hifumi-e = 'In case of problems, suggestions or want to see bot progress join to our support server: https://discord.gg/FtDbNrd';
+    var q_hifumi1 = 'Hello, my name is Hifumi and I\'m a multifunctional + music bot that will give you fun and is very easy to use.';
+    var q_hifumi2 = 'To get started, select your favorite command category by typing a number and know more.';
+    var q_hifumi3 = 'PLEASE NOTE! More features are coming soon, any suggestion is really appreciated :D';
+    var q_hifumi4 = 'Do you think you like this bot? Invite it to your server here: https://discordapp.com/oauth2/authorize?client_id=227171028072267778&scope=bot&permissions=2146958463';
+    var q_hifumi5 = 'In case of problems, suggestions or want to see bot progress join to our support server: https://discord.gg/FtDbNrd';
 
-    consoletype(q_hifumi-a, document.getElementById('q_hifumi-a'));
-    consoletype(q_hifumi-b, document.getElementById('q_hifumi-b'));
-    consoletype(q_hifumi-c, document.getElementById('q_hifumi-c'));
-    consoletype(q_hifumi-d, document.getElementById('q_hifumi-d'));
-    consoletype(q_hifumi-e, document.getElementById('q_hifumi-e'));
+    consoletype(q_hifumi1, document.getElementById('q_hifumi1'));
+    consoletype(q_hifumi2, document.getElementById('q_hifumi2'));
+    consoletype(q_hifumi3, document.getElementById('q_hifumi3'));
+    consoletype(q_hifumi4, document.getElementById('q_hifumi4'));
+    consoletype(q_hifumi5, document.getElementById('q_hifumi5'));
   }
 
   function close(ev) {
