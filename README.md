@@ -9,6 +9,8 @@
 </p>
 
 ---
+Absolutely no support will be given since it's very old version (and messy). Please read the wiki if you have questions.
+
 Hifumi is a multifunctional Discord bot developed by Underforest#1284 and it’s based on NEW GAME!’s character. The main focus of the bot is providing fun and useful tools for your Discord server and for me to learn more Javascript programming. Written in JavaScript [Node.JS](https://nodejs.org), using the [discordie](https://qeled.github.io/discordie) library and music resources are forked from [WildBeats](https://github.com/TheSharks/WildBeats).
 
 WARNING: This is an edited version for public use, content can be a bit messy lol
