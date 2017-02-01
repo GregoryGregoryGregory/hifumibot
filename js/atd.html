@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="description" content="Tumblr API - Get Photos via JS" />
+    <meta charset="utf-8">
+    <title>Tumblr API - Get Photos via JS</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script>
+      $(document).ready(function (){
+        var link = "http://api.tumblr.com/v2/blog/accordingtodevin.tumblr.com/posts?";
+        $.ajax({
+          type: "GET",
+          url : link,
+          dataType: "jsonp", 
+          data: {
+              api_key: "fuiKNFp9vQFvjLNvx4sUwti4Yb5yGutBN4Xh10LXZhhRKjWlV4"
+          }
+        }).done(function( data ) {
+          $.each(data.response.posts, function(){
+            var _photos = this.photos;
+            
+            $.each(_photos, function(){
+              $('body').append("<img src='" + this.original_size.url + "'/>");
+            });
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>
