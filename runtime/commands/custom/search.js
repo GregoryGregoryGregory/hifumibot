@@ -1,3 +1,14 @@
+var Commands = []
+var request = require('request')
+var config = require('../../../config.json')
+var Logger = require('../../internal/logger.js').Logger
+var argv = require('minimist')(process.argv.slice(2))
+let axios = require('axios'),
+    moment = require('moment'),
+    compass = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"],
+    xml2js = require('xml2js')
+	fix = require('entities')
+
 Commands.weather = {
   name: 'weather',
   timeout: 5,
